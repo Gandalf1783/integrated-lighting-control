@@ -1,23 +1,23 @@
 clear
 echo "Compiling..."
 echo "Main" &&
-g++ -c main.cpp &&
+g++ -c main.cpp -o build/main.o &&
 echo "Display" &&
-g++ -c gfx/Display.cpp &&
+g++ -c gfx/Display.cpp -o build/Display.o &&
 echo "UiManager" &&
-g++ -c gfx/UiManager.cpp &&
+g++ -c gfx/UiManager.cpp -o build/UiManager.o &&
 echo "UiObject" &&
-g++ -c gfx/ui/UiObject.cpp &&
+g++ -c gfx/ui/UiObject.cpp -o build/UiObject.o &&
 echo "Image" &&
-g++ -c gfx/ui/Image.cpp &&
+g++ -c gfx/ui/Image.cpp -o build/Image.o &&
 echo "ProgressBar" &&
-g++ -c gfx/ui/ProgressBar.cpp &&
+g++ -c gfx/ui/ProgressBar.cpp -o build/ProgressBar.o &&
 echo "Font" &&
-g++ -c gfx/bitmapfont/Font.cpp &&
+g++ -c gfx/bitmapfont/Font.cpp -o build/Font.o &&
 echo "Text" &&
-g++ -c gfx/ui/Text.cpp &&
+g++ -c gfx/ui/Text.cpp -o build/Text.o &&
 echo "Rectangle"
-g++ -c gfx/ui/Rectangle.cpp &&
+g++ -c gfx/ui/Rectangle.cpp -o build/Rectangle.o &&
 clear &&
 echo "Linking..." &&
-g++ -g3 main.o Rectangle.o Font.o Text.o ProgressBar.o Display.o UiManager.o UiObject.o Image.o -pthread && clear && echo "Running..." && ./a.out
+g++ -g3 build/*.o -pthread && clear && echo "Running..." && ./a.out

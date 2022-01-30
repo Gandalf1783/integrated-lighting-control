@@ -1,3 +1,4 @@
 *.o
-a.out
 output.log
+a.out
+build/

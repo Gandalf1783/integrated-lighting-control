@@ -68,10 +68,14 @@ void UiManager::renderDisplays() {
 void UiManager::addDisplay(Display d) {
   displayArray.push_back(d);
   
+  Rectangle* pRect = new Rectangle();
+
   ProgressBar* pBar = new ProgressBar();
   pBar->maxProgress = 60*15;
-  pBar->progress = 1;
+  pBar->progress = 25;
+  pBar->maxProgress = 100;
   pBar->setPos(205,560);
+  pBar->setDimensions(150,20);
 
   
   Image* i = new Image();
@@ -85,6 +89,7 @@ void UiManager::addDisplay(Display d) {
   uiArray.push_back(i);
   uiArray.push_back(pBar);
   uiArray.push_back(t);
+  uiArray.push_back(pRect);
 }
 
 void UiManager::startThread() {
@@ -101,3 +106,10 @@ void UiManager::stopThread() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
   printf("Thread has stopped.\n");
 }
+
+
+void Rectangle::setColor(char r, char g, char b) {
+    this->r = r;
+    this->g = g;
+    this->b = b;
+};

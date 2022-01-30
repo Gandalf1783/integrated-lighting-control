@@ -9,8 +9,10 @@
 #include "ui/Image.hpp"
 #include "ui/ProgressBar.hpp"
 #include "ui/Text.hpp"
+#include "ui/Rectangle.hpp"
 #include <chrono>
 #include <thread>
+
 
 #ifndef UIMANAGER_HPP
 #define UIMANAGER_HPP

@@ -26,7 +26,6 @@ void ProgressBar::render(char * framebuffer) {
         }
     }
     
-    progress = progress+2;
     // Prevent over and underflow.
     if(progress<0) progress = 0;
     if(progress>maxProgress)progress = maxProgress;

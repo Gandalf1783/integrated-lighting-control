@@ -36,10 +36,11 @@ void Image::render(char *imageBuffer)
     for (posX = x; posX < width; posX++)
     {
      // printf("PosX: %d | PosY: %d\n", posX, posY);
-      location = posX * this->channels +
-                 posY * this->line_length;
-      unsigned char bytePerPixel = channels;
-      unsigned char *pixelOffset = img + (posX + width * posY) * bytePerPixel;
+      location = posX * channels +
+                 posY * line_length;
+
+      unsigned char *pixelOffset = img + (posX + width * posY) * channels;
+      
       char r = pixelOffset[0];
       char g = pixelOffset[1];
       char b = pixelOffset[2];

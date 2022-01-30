@@ -16,6 +16,8 @@ echo "Font" &&
 g++ -c gfx/bitmapfont/Font.cpp &&
 echo "Text" &&
 g++ -c gfx/ui/Text.cpp &&
+echo "Rectangle"
+g++ -c gfx/ui/Rectangle.cpp &&
 clear &&
 echo "Linking..." &&
-g++ -g3 main.o Font.o Text.o ProgressBar.o Display.o UiManager.o UiObject.o Image.o -pthread && clear && echo "Running..." && ./a.out
+g++ -g3 main.o Rectangle.o Font.o Text.o ProgressBar.o Display.o UiManager.o UiObject.o Image.o -pthread && clear && echo "Running..." && ./a.out

@@ -16,11 +16,14 @@ Window::Window(std::string title) {
     this->title->setColor(0xFF, 0xFF, 0xFF);
 
     Text* t = new Text();
-    t->setPos(10,10);
+    t->setPos(5,3);
     t->setText("Hello, i'm a text!");
     t->setColor(255,0,0);
     
     this->uiObjects.push_back(t);
+
+    
+
 };
 
 
@@ -41,7 +44,7 @@ void Window::render(char * imageBuffer, int lineLength) {
         }
     }
 
-    this->title->setPos(x+(width/2)-20,y+(titleHeight/2)-7); // Center the Text
+    this->title->setPos(x+(width/2)-(this->title->getCharCount()*8/2),y+(titleHeight/2)-7); // Center the Text
     this->title->render(imageBuffer,lineLength);
 
     for(int i = 0; i < width; i++) {
@@ -49,9 +52,9 @@ void Window::render(char * imageBuffer, int lineLength) {
             location =  i * 4 +
                         j * lineLength;
             
-            *(windowFramebuffer + location) = 0xAE; //b
-            *(windowFramebuffer + location + 1) = 0xAE; //g
-            *(windowFramebuffer + location + 2) = 0xAE; //r
+            *(windowFramebuffer + location) = 0xA0; //b
+            *(windowFramebuffer + location + 1) = 0xA0; //g
+            *(windowFramebuffer + location + 2) = 0xA0; //r
             *(windowFramebuffer + location + 3) = 0x0; // a
         }
     }
@@ -82,7 +85,7 @@ void Window::render(char * imageBuffer, int lineLength) {
     for(int j = 0; j < height; j++) {
         u_int64_t test = (j)*lineLength;
         u_int64_t test2 = x*4+(y+j+titleHeight)*lineLength;
-        memcpy(imageBuffer+(test2), windowFramebuffer+(test), screensizeInBytes/height);
+        memcpy(imageBuffer+(test2), windowFramebuffer+(test), width*4);
     }
 
     // u_int64_t test = (y)*lineLength;

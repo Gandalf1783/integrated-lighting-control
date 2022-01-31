@@ -24,6 +24,7 @@ class Text : public UiObject {
         void render(char * imageBuffer, int lineLength);
         void setText(std::string text);
         void setPos(int x, int y);
+        int getCharCount();
         
 };
 

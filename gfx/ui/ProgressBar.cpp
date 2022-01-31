@@ -10,7 +10,7 @@ ProgressBar::ProgressBar() {
 
 void ProgressBar::render(char * imageBuffer, int lineLength) {
     // std::cout<<"\n\nProgressBar is rendering:\n";
-
+    progress++;
     u_int64_t location;
 
     // Diese 2 For-Schleifen malen den Hintergrund
@@ -30,7 +30,7 @@ void ProgressBar::render(char * imageBuffer, int lineLength) {
     if(progress<0) progress = 0;
     if(progress>maxProgress)progress = maxProgress;
 
-    float lengthInPx = ((float) progress / (float) maxProgress) * (float)width;
+    float lengthInPx = ((float) progress / (float) maxProgress) * (float)width; // calculate percentage and then upscale to pixels
     for(int i = x+margin; i < x+lengthInPx-margin; i++) {
         for(int j = y+margin; j < y+height-margin; j++) {
             location = i * 4 + // Offset des Pointers für den Pixel

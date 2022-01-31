@@ -3,8 +3,6 @@ using std::string;
 
 Image::Image()
 {
-  x = 0; 
-  y = 0;
   std::cout << "Image was created!" << '\n';
 };
 
@@ -21,7 +19,7 @@ void Image::loadImage(char * path)
 
 void Image::render(char * imageBuffer, int lineLength)
 {
-  // printf("Image is rendering: \n");
+  //printf("Image is rendering: \n");
   // printf("Address of imageBuffer IMAGE: %x\n", imageBuffer);
   // printf("LineLength: %u\n",this->line_length);
   int posX = 0, posY = 0; // Used for iteration

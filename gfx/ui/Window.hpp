@@ -3,6 +3,7 @@
 #include <vector>
 #include "Text.hpp"
 #include "Rectangle.hpp"
+#include "ProgressBar.hpp"
 #include "Image.hpp"
 
 #ifndef WINDOW_HPP

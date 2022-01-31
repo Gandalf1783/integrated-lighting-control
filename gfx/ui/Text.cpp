@@ -45,6 +45,10 @@ void Text::render(char * imageBuffer, int lineLength) {
     }
 };
 
+int Text::getCharCount() {
+    return this->text.length();
+};
+
 void Text::setPos(int x, int y) {
     this->x = x;
     this->y = y;

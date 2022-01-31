@@ -72,26 +72,28 @@ void UiManager::addDisplay(Display d) {
 
   ProgressBar* pBar = new ProgressBar();
   pBar->maxProgress = 60*15;
-  pBar->progress = 25;
+  pBar->progress = 0;
   pBar->maxProgress = 100;
-  pBar->setPos(205,560);
+  pBar->setPos(5,20);
   pBar->setDimensions(150,20);
-
   
   Image* i = new Image();
-  i->loadImage("boot.png");
+  i->loadImage("test.png");
 
   Text* t = new Text();
   t->setColor(0xA0, 0xA0, 0xA0);
   t->setText("Ver. 1.0-DEV");
 
   Window* w = new Window("Test!");
-
+  Window* w2 = new Window("Systemeinstellungen!");
+  w2->setPos(150,300);
+  w2->addUiObject(pBar);
   //printf("Image pointer: %x\n", &i);
   //uiArray.push_back(t);
   //w->addUiObject(i);
   //w->addUiObject(pBar);
   uiArray.push_back(w);
+  uiArray.push_back(w2);
 }
 
 void UiManager::startThread() {

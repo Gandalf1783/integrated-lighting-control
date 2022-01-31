@@ -87,6 +87,7 @@ char* Display::getFrameBuffer() {
 
 void Display::renderDisplay() {
   memcpy(fbp, imageBuffer, screensize); // After each frame!
+  memset(imageBuffer,0,screensize);
 };
 
 void Display::testRender() {

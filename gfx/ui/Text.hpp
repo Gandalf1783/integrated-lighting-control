@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "UiObject.hpp"
+#include "Rectangle.hpp"
 #include "../bitmapfont/Font.cpp"
 
 

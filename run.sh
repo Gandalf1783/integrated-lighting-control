@@ -18,6 +18,7 @@ echo "Text" &&
 g++ -c gfx/ui/Text.cpp -o build/Text.o &&
 echo "Rectangle"
 g++ -c gfx/ui/Rectangle.cpp -o build/Rectangle.o &&
-clear &&
+echo "Window" &&
+g++ -c gfx/ui/Window.cpp -o build/Window.o &&
 echo "Linking..." &&
-g++ -g3 build/*.o -pthread && clear && echo "Running..." && ./a.out
+g++ -g3 build/*.o -pthread && echo "Running..." && ./a.out

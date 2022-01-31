@@ -10,6 +10,7 @@
 #include "ui/ProgressBar.hpp"
 #include "ui/Text.hpp"
 #include "ui/Rectangle.hpp"
+#include "ui/Window.hpp"
 #include <chrono>
 #include <thread>
 

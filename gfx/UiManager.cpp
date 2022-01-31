@@ -51,7 +51,7 @@ void UiManager::renderDisplays() {
     // RENDER CODE:
     for(Display d: displayArray) {
       char * framebuffer = d.getFrameBuffer();
-      // printf("Framebuffer: %x\n", framebuffer);
+
       // printf("uiArray: %x\n", uiArray);
       // printf("&uiArray: %x\n", &uiArray);
       for(UiObject* pObject : uiArray) {
@@ -85,11 +85,13 @@ void UiManager::addDisplay(Display d) {
   t->setColor(0xA0, 0xA0, 0xA0);
   t->setText("Ver. 1.0-DEV");
 
+  Window* w = new Window("Test!");
+
   //printf("Image pointer: %x\n", &i);
-  uiArray.push_back(i);
-  uiArray.push_back(pBar);
-  uiArray.push_back(t);
-  uiArray.push_back(pRect);
+  //uiArray.push_back(t);
+  //w->addUiObject(i);
+  //w->addUiObject(pBar);
+  uiArray.push_back(w);
 }
 
 void UiManager::startThread() {

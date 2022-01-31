@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "gfx/Display.hpp"
 #include "gfx/UiManager.hpp"
 #include <chrono>

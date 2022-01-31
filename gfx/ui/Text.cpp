@@ -34,7 +34,7 @@ void Text::render(char * imageBuffer) {
             char d = font[c][j];
             
             for(int k = 0; k < 8; k++) {
-                location =  (i*8+abs(k-8)) * 4 + abs(j-12) * 4096;
+                location =  ((x+(i*8+abs(k-8))) * 4) + ((y+abs(j-12)) * 4096);
                 if(((d>>k) & 0x1) == true) {
                     *(imageBuffer + location) = b;
                     *(imageBuffer + location +1) = g;
@@ -44,6 +44,8 @@ void Text::render(char * imageBuffer) {
             }
         }
     }
+    
+    
 /*
     for(int i = 0; i < 95; i++) {
         for(int j = 12; j > 0; j--) {

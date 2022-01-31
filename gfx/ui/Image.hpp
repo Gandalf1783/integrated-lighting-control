@@ -14,7 +14,6 @@ class Image : public UiObject {
   private:
     unsigned char *img;
     int width, height, channels;
-    int line_length;
     int x,y;
   public:
     Image();

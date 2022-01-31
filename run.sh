@@ -20,5 +20,7 @@ echo "Rectangle"
 g++ -c gfx/ui/Rectangle.cpp -o build/Rectangle.o &&
 echo "Window" &&
 g++ -c gfx/ui/Window.cpp -o build/Window.o &&
+echo "Line" &&
+g++ -c gfx/ui/Line.cpp -o build/Line.o &&
 echo "Linking..." &&
 g++ -g3 build/*.o -pthread && echo "Running..." && ./a.out

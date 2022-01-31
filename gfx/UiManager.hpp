@@ -11,6 +11,7 @@
 #include "ui/Text.hpp"
 #include "ui/Rectangle.hpp"
 #include "ui/Window.hpp"
+#include "ui/Line.hpp"
 #include <chrono>
 #include <thread>
 

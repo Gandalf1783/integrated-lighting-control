@@ -21,9 +21,6 @@ Window::Window(std::string title) {
     t->setColor(255,0,0);
     
     this->uiObjects.push_back(t);
-
-    
-
 };
 
 
@@ -32,6 +29,11 @@ void Window::render(char * imageBuffer, int lineLength) {
     
     windowFramebuffer = (char *) memset(windowFramebuffer, 0x0, screensizeInBytes);
 
+    if(y<500)
+        y++;
+    if(x<500) 
+        x++;
+    
     for(int i = x; i < x+width; i++) {
         for(int j = y; j < y+height; j++) {
             location =  i * 4 +
@@ -58,39 +60,18 @@ void Window::render(char * imageBuffer, int lineLength) {
             *(windowFramebuffer + location + 3) = 0x0; // a
         }
     }
-
-
-    //printf("Try this\n");
-    // for(int i = 0; i < 100; i++) {
-    //     for(int j = 0; j < 50; j++) {
-    //             location =  i * 4 +
-    //                     j * width*4;
-            
-    //         *(windowFramebuffer + location) = 0x00; //b
-    //         *(windowFramebuffer + location + 1) = 0xFF; //g
-    //         *(windowFramebuffer + location + 2) = 0x00; //r
-    //         *(windowFramebuffer + location + 3) = 0x0; // a
-    //     }
-    // }
     
     for(UiObject* uiObject : uiObjects) {
         uiObject->render(windowFramebuffer,lineLength);
     }
     
-    if(y<500)
-        y++;
-    if(x<500) 
-        x++;
+
 
     for(int j = 0; j < height; j++) {
         u_int64_t test = (j)*lineLength;
         u_int64_t test2 = x*4+(y+j+titleHeight)*lineLength;
         memcpy(imageBuffer+(test2), windowFramebuffer+(test), width*4);
     }
-
-    // u_int64_t test = (y)*lineLength;
-    // printf("Memcpy with %u bytes..\n", screensizeInBytes);
-    // memcpy(imageBuffer+test, windowFramebuffer, screensizeInBytes/height);
 };
 
 void Window::setPos(int x, int y) {
@@ -100,4 +81,4 @@ void Window::setPos(int x, int y) {
 
 void Window::addUiObject(UiObject* object) {
     this->uiObjects.push_back(object);
-}
+};

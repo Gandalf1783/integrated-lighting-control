@@ -19,33 +19,24 @@ void Image::loadImage(char * path)
 
 void Image::render(char * imageBuffer, int lineLength)
 {
-  //printf("Image is rendering: \n");
-  // printf("Address of imageBuffer IMAGE: %x\n", imageBuffer);
-  // printf("LineLength: %u\n",this->line_length);
   int posX = 0, posY = 0; // Used for iteration
   u_int64_t location = 0;       // Location of Pixel
-  //printf("PosY = %d | y = %d | height: %d", posY, y, height);
 
   for (posY = y; posY < height; posY++)
   {
-    //std::cout << "Yep. Height.";
     
     for (posX = x; posX < width; posX++)
     {
-     // printf("PosX: %d | PosY: %d\n", posX, posY);
       location = posX * channels +
-                 posY * line_length;
+                 posY * lineLength;
 
       unsigned char *pixelOffset = img + (posX + width * posY) * channels;
       
-      char r = pixelOffset[0];
-      char g = pixelOffset[1];
-      char b = pixelOffset[2];
+      for(int i = 0; i < channels; i++) {
+        char c = pixelOffset[i];
+        *(imageBuffer + location + i) = c;
+      }
 
-      *(imageBuffer + location) = r;        // Some blue
-      *(imageBuffer + location + 1) = g;    // A little green
-      *(imageBuffer + location + 2) = b;    // A lot of red
-      *(imageBuffer + location + 3) = 0x0; // No transparency
     }
   }
 };

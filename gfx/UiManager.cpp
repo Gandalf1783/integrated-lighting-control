@@ -27,7 +27,7 @@ void UiManager::stop() {
   ioctl(ttyfd, VT_WAITACTIVE, 1);
   close(ttyfd);
   printf("Changing to text mode and acquiring tty1\n");
-}
+};
 
 void UiManager::renderDisplays() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "]");
@@ -63,7 +63,7 @@ void UiManager::renderDisplays() {
 
     // printf("[RENDER] Loop-Time: %f \n", (work_time + sleep_time).count());
   }
-}
+};
 
 void UiManager::addDisplay(Display d) {
   displayArray.push_back(d);
@@ -78,7 +78,10 @@ void UiManager::addDisplay(Display d) {
   pBar->setDimensions(150,20);
   
   Image* i = new Image();
-  i->loadImage("test.png");
+  i->setPos(0,0);
+  i->loadImage("Test_card.png");
+  
+  Line* l = new Line();
 
   Text* t = new Text();
   t->setColor(0xA0, 0xA0, 0xA0);
@@ -87,20 +90,23 @@ void UiManager::addDisplay(Display d) {
   Window* w = new Window("Test!");
   Window* w2 = new Window("Systemeinstellungen!");
   w2->setPos(150,300);
-  w2->addUiObject(pBar);
+  w2->addUiObject(i);
   //printf("Image pointer: %x\n", &i);
   //uiArray.push_back(t);
   //w->addUiObject(i);
   //w->addUiObject(pBar);
+
+  //uiArray.push_back(i);
   uiArray.push_back(w);
   uiArray.push_back(w2);
+  uiArray.push_back(l);
 }
 
 void UiManager::startThread() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
     printf("Starting Thread\n");
     uiManagerThread = std::thread(&UiManager::renderDisplays, this);
-}
+};
 
 void UiManager::stopThread() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
@@ -109,8 +115,7 @@ void UiManager::stopThread() {
   uiManagerThread.join();
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
   printf("Thread has stopped.\n");
-}
-
+};
 
 void Rectangle::setColor(char r, char g, char b) {
     this->r = r;

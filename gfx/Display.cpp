@@ -43,7 +43,7 @@ void Display::beginDisplay() {
   screensize = vinfo.xres_virtual * vinfo.yres_virtual * vinfo.bits_per_pixel / 8;
 
   // Map the device to memory
-  fbp = (char *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+  fbp = (char *) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
   if (fbp == NULL) {
       printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot map framebuffer to memory", displayNumber);
       exit(4);

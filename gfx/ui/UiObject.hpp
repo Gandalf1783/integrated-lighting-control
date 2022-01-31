@@ -9,7 +9,7 @@ class UiObject {
     int x,y;
   public:
     UiObject();
-    virtual void render(char * imageBuffer) = 0;
+    virtual void render(char * imageBuffer, int lineLength) = 0;
     virtual void setPos(int x, int y) = 0;
     virtual ~UiObject() = default;
     

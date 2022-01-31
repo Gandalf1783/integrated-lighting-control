@@ -8,9 +8,8 @@ Image::Image()
   std::cout << "Image was created!" << '\n';
 };
 
-void Image::loadImage(char * path, int line_length)
+void Image::loadImage(char * path)
 {
-  this->line_length = line_length;
   img = stbi_load(path, &width, &height, &channels, 0);
   if (img == NULL)
   {
@@ -20,7 +19,7 @@ void Image::loadImage(char * path, int line_length)
   printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
 };
 
-void Image::render(char *imageBuffer)
+void Image::render(char * imageBuffer, int lineLength)
 {
   // printf("Image is rendering: \n");
   // printf("Address of imageBuffer IMAGE: %x\n", imageBuffer);

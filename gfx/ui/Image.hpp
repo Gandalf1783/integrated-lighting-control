@@ -18,8 +18,8 @@ class Image : public UiObject {
     int x,y;
   public:
     Image();
-    void loadImage(char * path, int line_length);
-    void render(char * imageBuffer);
+    void loadImage(char * path);
+    void render(char * imageBuffer, int lineLength);
     void setPos(int x, int y);
 };
 

@@ -51,12 +51,12 @@ void UiManager::renderDisplays() {
     // RENDER CODE:
     for(Display d: displayArray) {
       char * framebuffer = d.getFrameBuffer();
-
+      int lineLength = d.getLineLength();
       // printf("uiArray: %x\n", uiArray);
       // printf("&uiArray: %x\n", &uiArray);
       for(UiObject* pObject : uiArray) {
         // printf("[RENDER] (%x) Rendering Object...", pObject);
-        pObject->render(framebuffer);
+        pObject->render(framebuffer, lineLength);
       } 
       d.renderDisplay();
     }
@@ -79,7 +79,7 @@ void UiManager::addDisplay(Display d) {
 
   
   Image* i = new Image();
-  i->loadImage("boot.png", d.getLineLength());
+  i->loadImage("boot.png");
 
   Text* t = new Text();
   t->setColor(0xA0, 0xA0, 0xA0);

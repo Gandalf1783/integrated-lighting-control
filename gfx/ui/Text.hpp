@@ -21,7 +21,7 @@ class Text : public UiObject {
         Text(std::string s);
         Text(char* s);
         void setColor(char r, char g, char b);
-        void render(char * imageBuffer);
+        void render(char * imageBuffer, int lineLength);
         void setText(std::string text);
         void setPos(int x, int y);
         

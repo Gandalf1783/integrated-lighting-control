@@ -12,7 +12,7 @@ class ProgressBar : public UiObject {
         int maxProgress; // Maximal zu erreichner Fortschritt
         long progress; // Fortschritt aktuell
         ProgressBar(); // Constructor
-        void render(char * framebuffer); // Rendermethode
+        void render(char * imageBuffer, int lingeLength); // Rendermethode
         void setPos(int x, int y); // Position setzen
         void setDimensions(int width, int height);
 };

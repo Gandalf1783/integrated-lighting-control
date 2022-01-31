@@ -10,7 +10,7 @@ class Rectangle : public UiObject {
         int r,g,b;
     public:
         Rectangle();
-        void render(char * imageBuffer);
+        void render(char * imageBuffer, int lineLength);
         void setPos(int x, int y);
         void setDimensions(int width, int height);
         void setColor(char r, char g, char b);

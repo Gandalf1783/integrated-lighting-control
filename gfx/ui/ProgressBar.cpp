@@ -8,7 +8,7 @@ ProgressBar::ProgressBar() {
     margin = 5;
 };
 
-void ProgressBar::render(char * framebuffer) {
+void ProgressBar::render(char * imageBuffer, int lineLength) {
     // std::cout<<"\n\nProgressBar is rendering:\n";
 
     u_int64_t location;
@@ -17,12 +17,12 @@ void ProgressBar::render(char * framebuffer) {
     for(int i = x; i < x+width; i++) {
         for(int j = y; j < y+height; j++) {
             location = i * 4 + // Offset des Pointers für den Pixel
-                j * 4096;
+                j * lineLength;
 
-            *(framebuffer + location) = 0xFF; // B
-            *(framebuffer + location +1) = 0xFF; // G
-            *(framebuffer + location +2) = 0xFF; // A
-            *(framebuffer + location +3) = 0; // A
+            *(imageBuffer + location) = 0xFF; // B
+            *(imageBuffer + location +1) = 0xFF; // G
+            *(imageBuffer + location +2) = 0xFF; // A
+            *(imageBuffer + location +3) = 0; // A
         }
     }
     
@@ -34,12 +34,12 @@ void ProgressBar::render(char * framebuffer) {
     for(int i = x+margin; i < x+lengthInPx-margin; i++) {
         for(int j = y+margin; j < y+height-margin; j++) {
             location = i * 4 + // Offset des Pointers für den Pixel
-                j * 4096;
+                j * lineLength;
             
-            *(framebuffer + location) = 0xFF; // B
-            *(framebuffer + location +1) = 0x00; // G
-            *(framebuffer + location +2) = 0x00; // R
-            *(framebuffer + location +3) = 0; // A
+            *(imageBuffer + location) = 0xFF; // B
+            *(imageBuffer + location +1) = 0x00; // G
+            *(imageBuffer + location +2) = 0x00; // R
+            *(imageBuffer + location +3) = 0; // A
         }
     }
 

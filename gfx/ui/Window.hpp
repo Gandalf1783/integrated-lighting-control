@@ -20,7 +20,7 @@ class Window : public UiObject {
         char * windowFramebuffer;
     public:
         Window(std::string title);
-        void render(char * imageBuffer);
+        void render(char * imageBuffer, int lineLength);
         void setPos(int x, int y);
         void addUiObject(UiObject* object);
 

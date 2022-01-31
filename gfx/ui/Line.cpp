@@ -25,11 +25,12 @@ void Line::setTo(int x, int y) {
 
 void Line::render(char * imageBuffer, int lineLength) {
     u_int64_t location;
-    int y = 0;
+    int x,y;
+    this->y2++;
     //printf("m: %u\n", m);
-    if((x2-x1) >= 0) {
-        for(int x = 0; x < (x2-x1); x++) {
-            y = x*m;
+    if((y2-y1) >= 0) {
+        for(int y = y1; y < y2-y1; y++) {
+            x = y/m;
             location = ((x1+x) * 4) + ((y1+y) * lineLength);
 
             *(imageBuffer + location) = 0xFF; //b
@@ -37,10 +38,10 @@ void Line::render(char * imageBuffer, int lineLength) {
             *(imageBuffer + location + 2) = 0xFF; //r
             *(imageBuffer + location + 3) = 0x0;  //a
         }
-    } else if((x2-x1) < 0) {
-        for(int x = 0; x > (x2-x1); x--) {
-            y = x*m;
-            location = ((x1+x) * 4) + ((y1-y) * lineLength);
+    } else if((y2-y1) < 0) {
+        for(int y = y2; y > 0; y--) {
+            x = y/m;
+            location = ((x1+x) * 4) + ((y1+y) * lineLength);
 
             *(imageBuffer + location) = 0xFF; //b
             *(imageBuffer + location + 1 ) = 0xFF; //g

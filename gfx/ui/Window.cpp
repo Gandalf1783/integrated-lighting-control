@@ -29,10 +29,10 @@ void Window::render(char * imageBuffer, int lineLength) {
     
     windowFramebuffer = (char *) memset(windowFramebuffer, 0x0, screensizeInBytes);
 
-    if(y<500)
-        y++;
-    if(x<500) 
-        x++;
+    // if(y<500)
+    //     y++;
+    // if(x<500) 
+    //     x++;
     
     for(int i = x; i < x+width; i++) {
         for(int j = y; j < y+height; j++) {
@@ -82,3 +82,5 @@ void Window::setPos(int x, int y) {
 void Window::addUiObject(UiObject* object) {
     this->uiObjects.push_back(object);
 };
+
+//TODO: FREE MEMORY!

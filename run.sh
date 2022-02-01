@@ -22,5 +22,9 @@ echo "Window" &&
 g++ -c gfx/ui/Window.cpp -o build/Window.o &&
 echo "Line" &&
 g++ -c gfx/ui/Line.cpp -o build/Line.o &&
+echo "InputManager" &&
+g++ -c input/InputManager.cpp -o build/InputManager.o &&
+echo "Mouse" &&
+g++ -c gfx/ui/Mouse.cpp -o build/Mouse.o &&
 echo "Linking..." &&
 g++ -g3 build/*.o -pthread && echo "Running..." && ./a.out

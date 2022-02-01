@@ -111,3 +111,6 @@ void Display::stopDisplay() {
   free(imageBuffer);
   close(fbfd);
 };
+
+
+//TODO: FREE MEMORY!

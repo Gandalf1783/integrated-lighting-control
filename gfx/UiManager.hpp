@@ -12,6 +12,7 @@
 #include "ui/Rectangle.hpp"
 #include "ui/Window.hpp"
 #include "ui/Line.hpp"
+#include "ui/Mouse.hpp"
 #include <chrono>
 #include <thread>
 
@@ -48,5 +49,6 @@ class UiManager {
     void startThread();
 
     void stopThread();
+    void addUiObject(Mouse* m) ;
 };
 #endif

@@ -77,12 +77,6 @@ void UiManager::addDisplay(Display d) {
   pBar->setPos(5,20);
   pBar->setDimensions(150,20);
   
-  Image* i = new Image();
-  i->setPos(0,0);
-  i->loadImage("Test_card.png");
-  
-  Line* l = new Line();
-
   Text* t = new Text();
   t->setColor(0xA0, 0xA0, 0xA0);
   t->setText("Ver. 1.0-DEV");
@@ -90,7 +84,7 @@ void UiManager::addDisplay(Display d) {
   Window* w = new Window("Test!");
   Window* w2 = new Window("Systemeinstellungen!");
   w2->setPos(150,300);
-  w2->addUiObject(i);
+  //w2->addUiObject(i);
   //printf("Image pointer: %x\n", &i);
   //uiArray.push_back(t);
   //w->addUiObject(i);
@@ -99,12 +93,14 @@ void UiManager::addDisplay(Display d) {
   //uiArray.push_back(i);
   uiArray.push_back(w);
   uiArray.push_back(w2);
-  uiArray.push_back(l);
 }
+void UiManager::addUiObject(Mouse* m) {
+  this->uiArray.push_back(m);
+};
 
 void UiManager::startThread() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
-    printf("Starting Thread\n");
+    printf("Starting UiManager\n");
     uiManagerThread = std::thread(&UiManager::renderDisplays, this);
 };
 

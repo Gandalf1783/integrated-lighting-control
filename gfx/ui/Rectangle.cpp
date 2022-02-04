@@ -53,3 +53,11 @@ void Rectangle::setPos(int x, int y) {
     this->x = x;
     this->y = y;
 };
+
+void Rectangle::mouseMoveEvent(int x, int y) {
+
+}
+
+void Rectangle::freeMemory() {
+
+};

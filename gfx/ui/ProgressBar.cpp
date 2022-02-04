@@ -55,3 +55,12 @@ void ProgressBar::setDimensions(int width, int height) {
     this->width = width;
     this->height = height;
 };
+
+
+void ProgressBar::mouseMoveEvent(int x, int y) {
+
+};
+
+void ProgressBar::freeMemory() {
+
+};

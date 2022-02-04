@@ -30,3 +30,11 @@ void Mouse::setDelta(int dX, int dY) {
     this->x = this->x+dX;
     this->y = this->y-dY;
 }
+
+void Mouse::mouseMoveEvent(int x, int y) {
+
+};
+
+void Mouse::freeMemory() {
+
+};

@@ -13,24 +13,28 @@ int main()
 {
   cout<<"Starting...";
   Mouse* m = new Mouse();
-  UiManager uiManager;
-  InputManager im;
-  Display d(0);
+  UiManager* uiManager = new UiManager();
+  InputManager* im = new InputManager();
+  Display* d = new Display(0);
 
-  char * framebuffer = d.getFrameBuffer();
-  uiManager.addUiObject(m);
-  uiManager.addDisplay(d);
-  uiManager.startThread();
-  im.setMouse(m);
-  im.startThread();
-  sleep_for(15s);
+  uiManager->addUiObject(m);
+  uiManager->addDisplay(d);
+  uiManager->startThread();
+  im->setMouse(m);
+  im->startThread();
+  sleep_for(5s);
 
   printf("[MAIN] STOPPING\n\n");
   
-  uiManager.stopThread();
-  uiManager.stop();
+  uiManager->stopThread();
+  uiManager->stop();
+  
+  im->stopThread();
 
-  im.stopThread();
+
+  printf("Deleting last references...\n");
+  delete uiManager;
+  delete im;
 
   printf("\n ### EXIT ### \n");
   return 0;

@@ -26,5 +26,10 @@ echo "InputManager" &&
 g++ -c input/InputManager.cpp -o build/InputManager.o &&
 echo "Mouse" &&
 g++ -c gfx/ui/Mouse.cpp -o build/Mouse.o &&
+echo "Button" &&
+g++ -c gfx/ui/Button.cpp -o build/Button.o
+echo "ContextMenu"
+g++ -c gfx/ui/ContextMenu.cpp -o build/ContextMenu.cpp &&
 echo "Linking..." &&
-g++ -g3 build/*.o -pthread && echo "Running..." && ./a.out
+#g++ -g3 build/*o -pthread && echo "Running" && ./a.out
+g++ -fsanitize=undefined,address -g3 build/*.o -pthread && echo "Running..." && ./a.out

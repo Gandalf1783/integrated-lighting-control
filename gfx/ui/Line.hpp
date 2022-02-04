@@ -13,6 +13,8 @@ class Line : public UiObject {
         void setFrom(int x, int y);
         void setTo(int x, int y);
         void render(char * imageBuffer, int lineLength);
+        void mouseMoveEvent(int x, int y);
+        void freeMemory();
 };
 
 #endif

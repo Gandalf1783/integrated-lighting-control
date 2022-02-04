@@ -1,16 +1,13 @@
 #include "UiObject.hpp"
 
-#ifndef Button_HPP
-#define Button_HPP
+#ifndef CONTEXTMENU_HPP
+#define CONTEXTMENU_HPP
 
-class Button: public UiObject {
+class ContextMenu : public UiObject {
     private:
         int x,y;
-        bool isPressed;
-        char colorPressed = 0x30;
-        char colorUnpressed = 0x80;
     public:
-        Button();
+        ContextMenu();
         void render(char * imageBuffer, int lineLength) = 0;
         void mouseMoveEvent(int x, int y);
         void freeMemory();

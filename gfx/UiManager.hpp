@@ -33,22 +33,20 @@ class UiManager {
     std::chrono::duration<double, std::milli> work_time;
 
   public:
-    std::vector<Display> displayArray;
+    std::vector<Display*> displayArray;
     std::vector<UiObject*> uiArray;
     bool shouldStop;
     bool displayFPS;
 
     UiManager();
-
     void stop();
-
     void renderDisplays();
-
-    void addDisplay(Display d);
-
+    void addDisplay(Display* d);
     void startThread();
-
     void stopThread();
-    void addUiObject(Mouse* m) ;
+    void addUiObject(UiObject* o) ;
+    void mouseMoveEvent(int x, int y);
+    void mouseOnReleaseEvent(int x, int y);
+    void mouseOnRightClickEvent(int x, int y);
 };
 #endif

@@ -22,6 +22,17 @@ UiManager::UiManager() {
 };
 
 void UiManager::stop() {
+  for(Display* d : displayArray) {
+    d->stopDisplay();
+    delete d;
+  }
+  this->displayArray.clear();
+
+  for(UiObject* o : uiArray) {
+    o->freeMemory(); // Free all memory that is inside the objects
+    delete o; // Delete the Object
+  }
+  this->uiArray.clear();
   ioctl(ttyfd, KDSETMODE, KD_TEXT);
   ioctl(ttyfd,VT_ACTIVATE,1);
   ioctl(ttyfd, VT_WAITACTIVE, 1);
@@ -49,41 +60,29 @@ void UiManager::renderDisplays() {
     // (ca. 60 FPS)
   
     // RENDER CODE:
-    for(Display d: displayArray) {
-      char * framebuffer = d.getFrameBuffer();
-      int lineLength = d.getLineLength();
+    for(Display* d: displayArray) {
+      char * framebuffer = d->getFrameBuffer();
+      int lineLength = d->getLineLength();
       // printf("uiArray: %x\n", uiArray);
       // printf("&uiArray: %x\n", &uiArray);
       for(UiObject* pObject : uiArray) {
         // printf("[RENDER] (%x) Rendering Object...", pObject);
         pObject->render(framebuffer, lineLength);
       } 
-      d.renderDisplay();
+      d->renderDisplay();
     }
 
     // printf("[RENDER] Loop-Time: %f \n", (work_time + sleep_time).count());
   }
 };
 
-void UiManager::addDisplay(Display d) {
+void UiManager::addDisplay(Display* d) {
   displayArray.push_back(d);
   
-  Rectangle* pRect = new Rectangle();
-
-  ProgressBar* pBar = new ProgressBar();
-  pBar->maxProgress = 60*15;
-  pBar->progress = 0;
-  pBar->maxProgress = 100;
-  pBar->setPos(5,20);
-  pBar->setDimensions(150,20);
-  
-  Text* t = new Text();
-  t->setColor(0xA0, 0xA0, 0xA0);
-  t->setText("Ver. 1.0-DEV");
-
   Window* w = new Window("Test!");
   Window* w2 = new Window("Systemeinstellungen!");
-  w2->setPos(150,300);
+  
+
   //w2->addUiObject(i);
   //printf("Image pointer: %x\n", &i);
   //uiArray.push_back(t);
@@ -91,11 +90,12 @@ void UiManager::addDisplay(Display d) {
   //w->addUiObject(pBar);
 
   //uiArray.push_back(i);
-  uiArray.push_back(w);
   uiArray.push_back(w2);
+  uiArray.push_back(w);
+  //uiArray.push_back(i);
 }
-void UiManager::addUiObject(Mouse* m) {
-  this->uiArray.push_back(m);
+void UiManager::addUiObject(UiObject* o) {
+  this->uiArray.push_back(o);
 };
 
 void UiManager::startThread() {
@@ -113,8 +113,19 @@ void UiManager::stopThread() {
   printf("Thread has stopped.\n");
 };
 
-void Rectangle::setColor(char r, char g, char b) {
-    this->r = r;
-    this->g = g;
-    this->b = b;
+
+void UiManager::mouseMoveEvent(int x, int y) {
+  for(UiObject* o : uiArray) {
+      o->mouseMoveEvent(x,y);
+  }
+};
+
+void UiManager::mouseOnReleaseEvent(int x, int y) {
+    for(UiObject* o : uiArray) {
+      //o->mouseReleaseEvent(x,y);
+  }
+};
+
+void UiManager::mouseOnRightClickEvent(int x, int y) {
+
 };

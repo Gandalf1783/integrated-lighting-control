@@ -1,7 +1,6 @@
 #include "Line.hpp"
 
 Line::Line() {
-    printf("Construct!\n");
     this->x1 = 150;
     this->x2 = 100;
     this->y1 = 300;
@@ -49,4 +48,12 @@ void Line::render(char * imageBuffer, int lineLength) {
             *(imageBuffer + location + 3) = 0x0;  //a
         }
     }
+};
+
+void Line::mouseMoveEvent(int x, int y) {
+
+};
+
+void Line::freeMemory() {
+
 };

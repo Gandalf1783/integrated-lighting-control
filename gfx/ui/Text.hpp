@@ -25,6 +25,8 @@ class Text : public UiObject {
         void setText(std::string text);
         void setPos(int x, int y);
         int getCharCount();
+        void mouseMoveEvent(int x, int y);
+        void freeMemory();
         
 };
 

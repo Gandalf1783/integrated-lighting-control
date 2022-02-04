@@ -11,6 +11,8 @@ class Mouse : public UiObject {
         void render(char * imageBuffer, int lineLength);
         void setPos(int x, int y);
         void setDelta(int dX, int dY);
+        void mouseMoveEvent(int x, int y);
+        void freeMemory();
 };
 
 #endif

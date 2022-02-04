@@ -54,3 +54,9 @@ void Text::setPos(int x, int y) {
     this->y = y;
 };
 
+void Text::mouseMoveEvent(int x, int y) {
+
+};
+
+void Text::freeMemory() {
+};

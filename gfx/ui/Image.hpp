@@ -18,8 +18,10 @@ class Image : public UiObject {
   public:
     Image();
     void loadImage(char * path);
+    void mouseMoveEvent(int x, int y);
     void render(char * imageBuffer, int lineLength);
     void setPos(int x, int y);
+    void freeMemory();
 };
 
 #endif

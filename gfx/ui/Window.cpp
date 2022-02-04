@@ -3,8 +3,8 @@
 Window::Window(std::string title) {
     x = 0; //TODO: Issue when setting x and/or y > 0
     y = 0;
-    width = 200;
-    height = 200;
+    width = 600;
+    height = 600;
 
     screensizeInBytes = 4096*height*4; // *4 bytes (contains the rgba values)
 
@@ -64,8 +64,6 @@ void Window::render(char * imageBuffer, int lineLength) {
     for(UiObject* uiObject : uiObjects) {
         uiObject->render(windowFramebuffer,lineLength);
     }
-    
-
 
     for(int j = 0; j < height; j++) {
         u_int64_t test = (j)*lineLength;
@@ -81,6 +79,21 @@ void Window::setPos(int x, int y) {
 
 void Window::addUiObject(UiObject* object) {
     this->uiObjects.push_back(object);
+};
+
+void Window::mouseMoveEvent(int x, int y) {
+
+};
+
+void Window::freeMemory() {
+    for(UiObject* o : this->uiObjects) {
+        o->freeMemory();
+        delete o;
+    }
+    this->uiObjects.clear();
+    this->title->freeMemory();
+    delete this->title;
+    free(this->windowFramebuffer); // Free the space the window needs (imageBuffer)
 };
 
 //TODO: FREE MEMORY!

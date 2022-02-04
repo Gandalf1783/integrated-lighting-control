@@ -24,6 +24,8 @@ class Window : public UiObject {
         void render(char * imageBuffer, int lineLength);
         void setPos(int x, int y);
         void addUiObject(UiObject* object);
+        void mouseMoveEvent(int x, int y);
+        void freeMemory();
 
 };
 

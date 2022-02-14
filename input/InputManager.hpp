@@ -19,6 +19,7 @@ class InputManager {
         std::thread inputManagerThread;
         bool shouldStop;
         Mouse* m;
+        bool previousLeftClick;
     public:
         InputManager();
         void startThread();

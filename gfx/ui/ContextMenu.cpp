@@ -27,3 +27,6 @@ void ContextMenu::freeMemory() {
 
 };
 
+void ContextMenu::mouseReleasedEvent(int x, int y) {
+
+}

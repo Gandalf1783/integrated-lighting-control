@@ -4,6 +4,7 @@
 Mouse::Mouse() {
     this->x = 1024/2;
     this->y = 768/2;
+    this->wasMouseReleased = false;
 };
 
 void Mouse::render(char * imageBuffer, int lineLength) {
@@ -35,6 +36,29 @@ void Mouse::mouseMoveEvent(int x, int y) {
 
 };
 
+int Mouse::getX() {
+    return this->x;
+};
+
+int Mouse::getY() {
+    return this->y;
+};
+
 void Mouse::freeMemory() {
 
 };
+
+void Mouse::mouseReleasedEvent(int x, int y) {
+
+};
+
+void Mouse::mouseRelease() {
+    this->wasMouseReleased = true;
+    printf("THE MOUSE WAS RELEASED!\n");
+}
+
+bool Mouse::getMouseReleased() {
+    bool ret = this->wasMouseReleased;
+    this->wasMouseReleased = false;
+    return ret;
+}

@@ -27,3 +27,7 @@ void Button::mouseMoveEvent(int x, int y) {
 void Button::freeMemory() {
 
 };
+
+void Button::mouseReleasedEvent(int x, int y) {
+    printf("BUTTON WAS CLICKED!\n");
+}

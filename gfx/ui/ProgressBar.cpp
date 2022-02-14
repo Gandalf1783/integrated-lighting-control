@@ -64,3 +64,7 @@ void ProgressBar::mouseMoveEvent(int x, int y) {
 void ProgressBar::freeMemory() {
 
 };
+
+void ProgressBar::mouseReleasedEvent(int x, int y) {
+
+}

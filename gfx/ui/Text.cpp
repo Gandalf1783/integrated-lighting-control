@@ -59,4 +59,9 @@ void Text::mouseMoveEvent(int x, int y) {
 };
 
 void Text::freeMemory() {
+
 };
+
+void Text::mouseReleasedEvent(int x, int y) {
+
+}

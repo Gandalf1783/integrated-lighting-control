@@ -61,3 +61,8 @@ void Rectangle::mouseMoveEvent(int x, int y) {
 void Rectangle::freeMemory() {
 
 };
+
+
+void Rectangle::mouseReleasedEvent(int x, int y) {
+
+}

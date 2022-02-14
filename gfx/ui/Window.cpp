@@ -21,10 +21,13 @@ Window::Window(std::string title) {
     t->setColor(255,0,0);
     
     this->uiObjects.push_back(t);
+    this->stop = false;
 };
 
 
 void Window::render(char * imageBuffer, int lineLength) {
+    if(this->stop) 
+        return;
     u_int64_t location;
     
     windowFramebuffer = (char *) memset(windowFramebuffer, 0x0, screensizeInBytes);
@@ -73,19 +76,36 @@ void Window::render(char * imageBuffer, int lineLength) {
 };
 
 void Window::setPos(int x, int y) {
+     if(this->stop) 
+        return;
     this->x = x;
     this->y = y;
 };
 
 void Window::addUiObject(UiObject* object) {
+     if(this->stop) 
+        return;
     this->uiObjects.push_back(object);
+
 };
 
 void Window::mouseMoveEvent(int x, int y) {
-
+    if(this->stop) 
+            return;
 };
 
+void Window::mouseReleasedEvent(int x, int y) {
+    Text * t = this->title;
+
+    this->title = new Text();
+    this->title->setText("LMAO CLICK!");
+    this->title->setColor(0xFF, 0xFF, 0xFF);
+
+    delete t;
+}
+
 void Window::freeMemory() {
+    this->stop = true;
     for(UiObject* o : this->uiObjects) {
         o->freeMemory();
         delete o;
@@ -95,5 +115,3 @@ void Window::freeMemory() {
     delete this->title;
     free(this->windowFramebuffer); // Free the space the window needs (imageBuffer)
 };
-
-//TODO: FREE MEMORY!

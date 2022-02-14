@@ -31,7 +31,7 @@ class UiManager {
     std::chrono::system_clock::time_point timeA;
     std::chrono::system_clock::time_point timeB;
     std::chrono::duration<double, std::milli> work_time;
-
+    Mouse * m;
   public:
     std::vector<Display*> displayArray;
     std::vector<UiObject*> uiArray;
@@ -44,9 +44,11 @@ class UiManager {
     void addDisplay(Display* d);
     void startThread();
     void stopThread();
-    void addUiObject(UiObject* o) ;
+    void addUiObject(UiObject* o);
+    void setMouse(Mouse* m);
     void mouseMoveEvent(int x, int y);
     void mouseOnReleaseEvent(int x, int y);
     void mouseOnRightClickEvent(int x, int y);
+    void closeWindow(Window* window);
 };
 #endif

@@ -17,7 +17,7 @@ int main()
   InputManager* im = new InputManager();
   Display* d = new Display(0);
 
-  uiManager->addUiObject(m);
+  uiManager->setMouse(m);
   uiManager->addDisplay(d);
   uiManager->startThread();
   im->setMouse(m);
@@ -35,7 +35,8 @@ int main()
   printf("Deleting last references...\n");
   delete uiManager;
   delete im;
+  delete m;
 
-  printf("\n ### EXIT ### \n");
+  printf("\n### EXIT ###\n");
   return 0;
 }

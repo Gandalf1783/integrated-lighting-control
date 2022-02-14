@@ -57,3 +57,7 @@ void Line::mouseMoveEvent(int x, int y) {
 void Line::freeMemory() {
 
 };
+
+void Line::mouseReleasedEvent(int x, int y) {
+
+}

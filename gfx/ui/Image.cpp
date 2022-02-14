@@ -74,3 +74,7 @@ void Image::mouseMoveEvent(int x, int y) {
 void Image::freeMemory() {
   stbi_image_free(this->img);
 };
+
+void Image::mouseReleasedEvent(int x, int y) {
+
+}

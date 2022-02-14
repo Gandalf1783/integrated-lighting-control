@@ -15,6 +15,8 @@ class Line : public UiObject {
         void render(char * imageBuffer, int lineLength);
         void mouseMoveEvent(int x, int y);
         void freeMemory();
+        void mouseReleasedEvent();
+        void mouseReleasedEvent(int x, int y);
 };
 
 #endif

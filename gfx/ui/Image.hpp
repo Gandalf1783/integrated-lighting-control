@@ -22,6 +22,8 @@ class Image : public UiObject {
     void render(char * imageBuffer, int lineLength);
     void setPos(int x, int y);
     void freeMemory();
+    void mouseReleasedEvent();
+    void mouseReleasedEvent(int x, int y);
 };
 
 #endif

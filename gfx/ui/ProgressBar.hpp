@@ -16,6 +16,7 @@ class ProgressBar : public UiObject {
         void setPos(int x, int y); // Position setzen
         void setDimensions(int width, int height);
         void mouseMoveEvent(int x, int y);
+        void mouseReleasedEvent(int x, int y);
         void freeMemory();
 };
 

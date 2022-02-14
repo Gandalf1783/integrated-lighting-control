@@ -1,3 +1,4 @@
+
 #include "UiObject.hpp"
 #include <string.h>
 #include <vector>
@@ -6,10 +7,13 @@
 #include "ProgressBar.hpp"
 #include "Image.hpp"
 
+
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
+
 class Window : public UiObject {
+
 
     private:
         int x,y;
@@ -19,15 +23,15 @@ class Window : public UiObject {
         std::vector<UiObject*> uiObjects;
         u_int64_t screensizeInBytes;
         char * windowFramebuffer;
+        bool stop;
     public:
         Window(std::string title);
         void render(char * imageBuffer, int lineLength);
         void setPos(int x, int y);
         void addUiObject(UiObject* object);
         void mouseMoveEvent(int x, int y);
+        void mouseReleasedEvent(int x, int y);
         void freeMemory();
-
 };
-
 
 #endif

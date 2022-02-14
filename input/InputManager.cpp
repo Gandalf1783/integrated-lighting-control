@@ -10,15 +10,14 @@
 
 InputManager::InputManager() {
     this->shouldStop = false;
-
-
+    this->previousLeftClick = false;
 };
 
 void InputManager::inputThread() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
     printf("Opening device file /dev/input/mouse0\n");
     
-    this->inputFd = open("/dev/input/mouse0", O_RDWR);
+    this->inputFd = open("/dev/input/mice", O_RDWR);
 
       if(inputFd == -1)
     {
@@ -46,6 +45,11 @@ void InputManager::inputThread() {
             y = byte[2];
             printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
             this->m->setDelta(x,y);
+            if(this->previousLeftClick == true && left == false) {
+                printf("Calling Mouse Release!\n\n");
+                this->m->mouseRelease();
+            }
+            this->previousLeftClick = left;
         }   
     }
 

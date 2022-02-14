@@ -11,6 +11,7 @@ class ContextMenu : public UiObject {
         void render(char * imageBuffer, int lineLength) = 0;
         void mouseMoveEvent(int x, int y);
         void freeMemory();
+        void mouseReleasedEvent(int x, int y);
 };
 
 

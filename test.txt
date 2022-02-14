@@ -1,0 +1,184 @@
+[H[2J[3JCompiling...
+Main
+Display
+UiManager
+UiObject
+Image
+ProgressBar
+Font
+Text
+Rectangle
+Window
+Line
+InputManager
+Mouse
+Button
+ContextMenu
+Linking...
+Running...
+Starting...UIObject was created!
+Acquiring [33mtty2[0m and changing to graphics mode...
+[0m[[32mDISPLAY[0m] (0) : INFO : Initialising Display (0) 
+[0m[[32mDISPLAY[0m] Opening /dev/fb0...
+[0m[[32mDISPLAY[0m] The framebuffer device was opened successfully.
+[0m[[32mDISPLAY[0m] Screen-Res: 1024x768, 32bpp
+[0m[[32mDISPLAY[0m] The framebuffer device was mapped to memory successfully.
+[36m#### DISPLAY DEBUG ####
+Instance: 0 (0x40)
+Screensize: 1024x768 (3145728 bytes)
+DisplayBuffer Addr: 40100000
+ImageBuffer Addr: 3fdff800
+LineLength: 4096
+##############
+
+
+[0mUIObject was created!
+WindowBuffer was created with 9830400 bytes
+UIObject was created!
+UIObject was created!
+UIObject was created!
+WindowBuffer was created with 9830400 bytes
+UIObject was created!
+UIObject was created!
+[0m[[32mRENDER[0m] Starting UiManager
+[0m[[36mINPUT[0m] Starting InputManager
+[0m[[32mRENDER[0m] Render thread has been started
+[0m[[32mRENDER[0m] (40)
+[0m[[36mINPUT[0m] Opening device file /dev/input/mouse0
+UIObject was created!
+UIObject was created!
+x=111, y=-105, left=0, middle=0, right=0
+x=9, y=12, left=0, middle=0, right=0
+x=75, y=127, left=0, middle=0, right=0
+x=0, y=1, left=0, middle=0, right=0
+x=43, y=105, left=0, middle=0, right=0
+x=9, y=25, left=0, middle=0, right=0
+x=5, y=15, left=0, middle=0, right=0
+x=0, y=6, left=0, middle=0, right=0
+x=0, y=1, left=0, middle=0, right=0
+x=0, y=1, left=0, middle=0, right=0
+x=0, y=1, left=0, middle=0, right=0
+x=-5, y=-1, left=0, middle=0, right=0
+x=-4, y=-5, left=0, middle=0, right=0
+x=-9, y=-12, left=0, middle=0, right=0
+x=-10, y=-27, left=0, middle=0, right=0
+x=-11, y=-37, left=0, middle=0, right=0
+x=-9, y=-34, left=0, middle=0, right=0
+x=-8, y=-43, left=0, middle=0, right=0
+x=0, y=-47, left=0, middle=0, right=0
+x=5, y=-54, left=0, middle=0, right=0
+x=2, y=-24, left=0, middle=0, right=0
+x=2, y=-15, left=0, middle=0, right=0
+x=2, y=-12, left=0, middle=0, right=0
+x=0, y=-8, left=0, middle=0, right=0
+x=0, y=-6, left=0, middle=0, right=0
+x=-9, y=-44, left=0, middle=0, right=0
+x=-16, y=-37, left=0, middle=0, right=0
+x=-3, y=-6, left=0, middle=0, right=0
+x=-3, y=-6, left=0, middle=0, right=0
+x=-2, y=-3, left=0, middle=0, right=0
+x=-4, y=-7, left=0, middle=0, right=0
+x=-13, y=-13, left=0, middle=0, right=0
+x=-20, y=-9, left=0, middle=0, right=0
+x=-17, y=-8, left=0, middle=0, right=0
+x=-21, y=-7, left=0, middle=0, right=0
+x=-71, y=-3, left=0, middle=0, right=0
+x=-23, y=0, left=0, middle=0, right=0
+x=-30, y=0, left=0, middle=0, right=0
+x=-25, y=1, left=0, middle=0, right=0
+x=-16, y=2, left=0, middle=0, right=0
+x=-7, y=4, left=0, middle=0, right=0
+x=-5, y=5, left=0, middle=0, right=0
+x=-6, y=30, left=0, middle=0, right=0
+x=-1, y=37, left=0, middle=0, right=0
+x=6, y=24, left=0, middle=0, right=0
+x=6, y=14, left=0, middle=0, right=0
+x=8, y=12, left=0, middle=0, right=0
+x=6, y=6, left=0, middle=0, right=0
+x=4, y=2, left=0, middle=0, right=0
+x=1, y=1, left=0, middle=0, right=0
+x=0, y=0, left=1, middle=0, right=0
+x=0, y=0, left=0, middle=0, right=0
+Calling Mouse Release!
+
+UIObject was created!
+UIObject was created!
+x=0, y=0, left=1, middle=0, right=0
+x=0, y=0, left=0, middle=0, right=0
+Calling Mouse Release!
+
+UIObject was created!
+UIObject was created!
+x=0, y=0, left=1, middle=0, right=0
+x=0, y=0, left=0, middle=0, right=0
+Calling Mouse Release!
+
+UIObject was created!
+UIObject was created!
+x=0, y=-2, left=0, middle=0, right=0
+x=-4, y=-10, left=0, middle=0, right=0
+x=-6, y=-13, left=0, middle=0, right=0
+x=-2, y=-8, left=0, middle=0, right=0
+x=0, y=-8, left=0, middle=0, right=0
+x=0, y=-15, left=0, middle=0, right=0
+x=0, y=-10, left=0, middle=0, right=0
+x=6, y=-10, left=0, middle=0, right=0
+x=5, y=-3, left=0, middle=0, right=0
+x=25, y=-4, left=0, middle=0, right=0
+x=65, y=20, left=0, middle=0, right=0
+x=2, y=7, left=0, middle=0, right=0
+x=4, y=10, left=0, middle=0, right=0
+x=4, y=18, left=0, middle=0, right=0
+x=1, y=15, left=0, middle=0, right=0
+x=0, y=11, left=0, middle=0, right=0
+x=-13, y=21, left=0, middle=0, right=0
+x=-7, y=0, left=0, middle=0, right=0
+x=-9, y=0, left=0, middle=0, right=0
+x=-11, y=-3, left=0, middle=0, right=0
+x=-11, y=-8, left=0, middle=0, right=0
+x=-13, y=-14, left=0, middle=0, right=0
+x=-17, y=-35, left=0, middle=0, right=0
+x=10, y=-13, left=0, middle=0, right=0
+x=12, y=-7, left=0, middle=0, right=0
+x=12, y=-7, left=0, middle=0, right=0
+x=7, y=-5, left=0, middle=0, right=0
+x=2, y=-6, left=0, middle=0, right=0
+x=3, y=-8, left=0, middle=0, right=0
+x=0, y=-12, left=0, middle=0, right=0
+x=-5, y=-16, left=0, middle=0, right=0
+x=-16, y=-14, left=0, middle=0, right=0
+x=-12, y=-9, left=0, middle=0, right=0
+x=-17, y=-10, left=0, middle=0, right=0
+x=-26, y=-8, left=0, middle=0, right=0
+x=-19, y=-3, left=0, middle=0, right=0
+x=-15, y=0, left=0, middle=0, right=0
+x=-9, y=0, left=0, middle=0, right=0
+x=-6, y=5, left=0, middle=0, right=0
+x=-3, y=20, left=0, middle=0, right=0
+x=-2, y=13, left=0, middle=0, right=0
+x=-3, y=28, left=0, middle=0, right=0
+x=3, y=5, left=0, middle=0, right=0
+x=6, y=5, left=0, middle=0, right=0
+x=8, y=3, left=0, middle=0, right=0
+x=10, y=5, left=0, middle=0, right=0
+x=39, y=6, left=0, middle=0, right=0
+x=29, y=2, left=0, middle=0, right=0
+x=34, y=1, left=0, middle=0, right=0
+x=73, y=4, left=0, middle=0, right=0
+x=57, y=9, left=0, middle=0, right=0
+x=2, y=2, left=0, middle=0, right=0
+[MAIN] STOPPING
+
+[0m[[32mRENDER[0m] Stopping Thread
+x=7, y=8, left=0, middle=0, right=0
+x=16, y=33, left=0, middle=0, right=0
+x=5, y=17, left=0, middle=0, right=0
+[0m[[32mRENDER[0m] Thread has stopped.
+x=7, y=19, left=0, middle=0, right=0
+Changing to text mode and acquiring tty1
+[0m[[36mINPUT[0m] Stopping InputManager...
+[0m[[36mINPUT[0m] Joining Thread...x=3, y=13, left=0, middle=0, right=0
+[0m[[36mINPUT[0m] Done.
+Deleting last references...
+
+### EXIT ###

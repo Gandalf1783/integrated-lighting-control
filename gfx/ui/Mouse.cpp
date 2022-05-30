@@ -44,6 +44,14 @@ int Mouse::getY() {
     return this->y;
 };
 
+int Mouse::getDX() {
+    return this->x;
+};
+
+int Mouse::getDY() {
+    return this->y;
+};
+
 void Mouse::freeMemory() {
 
 };
@@ -52,13 +60,25 @@ void Mouse::mouseReleasedEvent(int x, int y) {
 
 };
 
+void Mouse::mouseDownEvent() {
+
+};
+
 void Mouse::mouseRelease() {
     this->wasMouseReleased = true;
-    printf("THE MOUSE WAS RELEASED!\n");
 }
 
 bool Mouse::getMouseReleased() {
     bool ret = this->wasMouseReleased;
     this->wasMouseReleased = false;
     return ret;
+}
+bool Mouse::getMouseLeftDown() {
+    return this->left;
+}
+
+void Mouse::setMouseButtons(bool left, bool right, bool middle) {
+    this->left = left;
+    this->right = right;
+    this->middle = middle;
 }

@@ -19,9 +19,12 @@ Window::Window(std::string title) {
     t->setPos(5,3);
     t->setText("Hello, i'm a text!");
     t->setColor(255,0,0);
+
+
     
     this->uiObjects.push_back(t);
     this->stop = false;
+    this->isMouseDown = false;
 };
 
 
@@ -76,8 +79,15 @@ void Window::render(char * imageBuffer, int lineLength) {
 };
 
 void Window::setPos(int x, int y) {
-     if(this->stop) 
+    if(this->stop) 
         return;
+    
+    if(x+width>1024 || x < 0)
+        return;
+    if(y+height+titleHeight>768 || y < 0)
+        return;
+        
+    printf("y+height: %d\n ", (y+height));
     this->x = x;
     this->y = y;
 };
@@ -92,20 +102,32 @@ void Window::addUiObject(UiObject* object) {
 void Window::mouseMoveEvent(int x, int y) {
     if(this->stop) 
             return;
+    if(this->isMouseDown) {
+        this->setPos(this->x+x,this->y+y);
+        /*
+        // If cursor is inside titleBar:
+        if(x >= this->x && x < this->x+this->width) {
+            // Then Drag the window around
+
+            if(y >= this->y && y < this->y+this->titleHeight) {
+
+            }
+        }
+        */
+        
+    }
 };
 
 void Window::mouseReleasedEvent(int x, int y) {
-    Text * t = this->title;
+    //this->stop = true;
+    this->isMouseDown = false;
+}
 
-    this->title = new Text();
-    this->title->setText("LMAO CLICK!");
-    this->title->setColor(0xFF, 0xFF, 0xFF);
-
-    delete t;
+void Window::mouseDownEvent() {
+    this->isMouseDown = true;
 }
 
 void Window::freeMemory() {
-    this->stop = true;
     for(UiObject* o : this->uiObjects) {
         o->freeMemory();
         delete o;

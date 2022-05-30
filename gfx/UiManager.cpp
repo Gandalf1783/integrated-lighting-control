@@ -58,8 +58,15 @@ void UiManager::renderDisplays() {
     std::chrono::duration<double, std::milli> sleep_time = timeB-timeA;
     // FPS LOOP END
     // (ca. 60 FPS)
+    int mouseX, mouseY;
+    mouseX = this->m->getDX();
+    mouseY = this->m->getDY();
+    this->mouseMoveEvent(mouseX, mouseY);
+    if(this->m->getMouseLeftDown()) {
+      this->mouseOnDownEvent(this->m->getX(), this->m->getY());
+    }
     if(this->m->getMouseReleased() == true) {
-      printf("IMMA CALL MOUSE RELEASE!\n");
+//      printf("IMMA CALL MOUSE RELEASE!\n");
       this->mouseOnReleaseEvent(this->m->getX(), this->m->getY());
     }
 
@@ -72,6 +79,7 @@ void UiManager::renderDisplays() {
       for(UiObject* pObject : uiArray) {
         // printf("[RENDER] (%x) Rendering Object...", pObject);
         pObject->render(framebuffer, lineLength);
+        
       } 
       this->m->render(framebuffer, lineLength);
 
@@ -134,6 +142,13 @@ void UiManager::closeWindow(Window* window) {
     }
   }
 };
+
+void UiManager::mouseOnDownEvent(int x, int y) {
+  for(UiObject* o : uiArray) {
+      o->mouseDownEvent();
+  }
+};
+
 
 void UiManager::mouseOnReleaseEvent(int x, int y) {
     for(UiObject* o : uiArray) {

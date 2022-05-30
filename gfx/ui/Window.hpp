@@ -24,6 +24,7 @@ class Window : public UiObject {
         u_int64_t screensizeInBytes;
         char * windowFramebuffer;
         bool stop;
+        bool isMouseDown;
     public:
         Window(std::string title);
         void render(char * imageBuffer, int lineLength);
@@ -31,6 +32,7 @@ class Window : public UiObject {
         void addUiObject(UiObject* object);
         void mouseMoveEvent(int x, int y);
         void mouseReleasedEvent(int x, int y);
+        void mouseDownEvent();
         void freeMemory();
 };
 

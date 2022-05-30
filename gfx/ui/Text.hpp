@@ -27,6 +27,7 @@ class Text : public UiObject {
         int getCharCount();
         void mouseMoveEvent(int x, int y);
         void mouseReleasedEvent(int x, int y);
+        void mouseDownEvent();
         void freeMemory();
         
 };

@@ -28,8 +28,13 @@ echo "Mouse" &&
 g++ -c gfx/ui/Mouse.cpp -o build/Mouse.o &&
 echo "Button" &&
 g++ -c gfx/ui/Button.cpp -o build/Button.o
-echo "ContextMenu"
+echo "ContextMenu" &&
 g++ -c gfx/ui/ContextMenu.cpp -o build/ContextMenu.o &&
+echo "Serial" &&
+g++ -c serial/Serial.cpp -o build/Serial.o &&
 echo "Linking..." &&
 #g++ -g3 build/*o -pthread && echo "Running" && ./a.out
 g++ -fsanitize=undefined,address -g3 build/*.o -pthread && echo "Running..." && ./a.out
+
+echo "Removing all Object-Files"
+rm build/*

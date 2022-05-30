@@ -43,10 +43,11 @@ void InputManager::inputThread() {
 
             x = byte[1];
             y = byte[2];
-            printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
+           // printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
             this->m->setDelta(x,y);
+            this->m->setMouseButtons(left, right, middle);
             if(this->previousLeftClick == true && left == false) {
-                printf("Calling Mouse Release!\n\n");
+//                printf("Calling Mouse Release!\n\n");
                 this->m->mouseRelease();
             }
             this->previousLeftClick = left;

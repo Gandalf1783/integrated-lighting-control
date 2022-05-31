@@ -32,6 +32,10 @@ echo "ContextMenu" &&
 g++ -c gfx/ui/ContextMenu.cpp -o build/ContextMenu.o &&
 echo "Serial" &&
 g++ -c serial/Serial.cpp -o build/Serial.o &&
+echo "Log" &&
+g++ -c log/Log.cpp -o build/Log.o &&
+echo "LogEvent" && 
+g++ -c log/LogEvent.cpp -o build/LogEvent.o &&
 echo "Linking..." &&
 #g++ -g3 build/*o -pthread && echo "Running" && ./a.out
 g++ -fsanitize=undefined,address -g3 build/*.o -pthread && echo "Running..." && ./a.out

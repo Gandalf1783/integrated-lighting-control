@@ -11,6 +11,7 @@
 
 #ifndef DISPLAY_H
 #define DISPLAY_H
+
 class Display {
   private:
     char fbfd; // Framebuffer (Number for the Monitor to be used)

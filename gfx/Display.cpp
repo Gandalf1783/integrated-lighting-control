@@ -1,5 +1,5 @@
-#include <iostream>
 #include "Display.hpp"
+#include "../log/Log.hpp"
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -11,6 +11,8 @@
 
 using std::string;
 
+extern Log* logger;
+
 void Display::beginDisplay() {
   // Open the file for reading and writing
   string fbPath = "/dev/fb"+std::to_string(displayNumber);
@@ -19,7 +21,8 @@ void Display::beginDisplay() {
   fbfd = open(fbPath.c_str(), O_RDWR);
 
   if (fbfd == -1) {
-      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot open framebuffer device", displayNumber);
+      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot open framebuffer device\n" ANSI_COLOR_RESET , displayNumber);
+      logger->logException(1);
       exit(1);
   }
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
@@ -27,13 +30,13 @@ void Display::beginDisplay() {
 
   // Get fixed screen information
   if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo) == -1) {
-     printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read fixed information", displayNumber);
+     printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read fixed information\n" ANSI_COLOR_RESET , displayNumber);
       exit(2);
   }
 
   // Get variable screen information
   if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo) == -1) {
-      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read variable information", displayNumber);
+      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read variable information\n" ANSI_COLOR_RESET , displayNumber);
       exit(3);
   }
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
@@ -45,7 +48,7 @@ void Display::beginDisplay() {
   // Map the device to memory
   fbp = (char *) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
   if (fbp == NULL) {
-      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot map framebuffer to memory", displayNumber);
+      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot map framebuffer to memory\n" ANSI_COLOR_RESET, displayNumber);
       exit(4);
   }
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
@@ -53,7 +56,7 @@ void Display::beginDisplay() {
 
   imageBuffer = (char *) malloc(screensize);
   if(imageBuffer ==  NULL) {
-    printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot allocate " ANSI_COLOR_BLUE "%u" ANSI_COLOR_RED " bytes for imageBuffer", displayNumber);
+    printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot allocate " ANSI_COLOR_BLUE "%u" ANSI_COLOR_RED " bytes for imageBuffer\n" ANSI_COLOR_RESET , displayNumber);
     exit(5);
   }
   printf(ANSI_COLOR_CYAN);

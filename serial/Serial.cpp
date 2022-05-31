@@ -15,6 +15,7 @@
     https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
 #######################################
 */
+
 void Serial::start() {
     fdSerialPort = open("/dev/ttyS0", O_RDWR);
 

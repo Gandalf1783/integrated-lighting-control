@@ -1,4 +1,7 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include "log/Log.hpp"
 #include "gfx/Display.hpp"
 #include "gfx/UiManager.hpp"
 #include "input/InputManager.hpp"
@@ -8,11 +11,15 @@
 
 using namespace std;
 
+// Global Variable:
+Log* logger = new Log();
+
+
 int main()
 {
 
   cout<<"Starting...";
-  
+
   Mouse* m = new Mouse();
   UiManager* uiManager = new UiManager();
   InputManager* im = new InputManager();

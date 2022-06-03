@@ -36,7 +36,7 @@ int main()
   uiManager->startThread();
   im->setMouse(m);
   im->startThread();
-  sleep_for(20s);
+  sleep_for(25s);
 
   printf("[MAIN] STOPPING\n\n");
   
@@ -53,7 +53,6 @@ int main()
   delete im;
   delete m;
   delete serial;
-
 
 
   printf("\n### EXIT ###\n");

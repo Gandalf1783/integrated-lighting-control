@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_STATIC
 #include "stb_image.h"
@@ -19,7 +21,7 @@ class Image : public UiObject {
     Image();
     void loadImage(char * path);
     void mouseMoveEvent(int x, int y);
-    void render(char * imageBuffer, int lineLength);
+    void render(Framebuffer fb);
     void setPos(int x, int y);
     void freeMemory();
     void mouseReleasedEvent();

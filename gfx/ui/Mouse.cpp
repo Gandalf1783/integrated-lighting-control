@@ -5,19 +5,15 @@ Mouse::Mouse() {
     this->x = 1024/2;
     this->y = 768/2;
     this->wasMouseReleased = false;
+    this->setMouseButtons(false, false, false);
 };
 
-void Mouse::render(char * imageBuffer, int lineLength) {
+void Mouse::render(Framebuffer fb) {
     u_int64_t location;
     //printf("this: 0x%x (render)\n", this);
     for(int i = this->x; i < this->x+4; i++) {
         for(int j = this->y; j < this->y+4; j++) {
-            location = (i*4) + j * lineLength;
-            //printf("x: %u | y: %u\n", this->x,this->y);
-            *(imageBuffer + location) = 0xFF;
-            *(imageBuffer + location +1) = 0xFF;
-            *(imageBuffer + location +2) = 0xFF;
-            *(imageBuffer + location +3) = 0x0;
+            fb.setPixel(i,j,0xFF,0xFF,0xFF);
         };
     };
 };
@@ -74,10 +70,12 @@ bool Mouse::getMouseReleased() {
     return ret;
 }
 bool Mouse::getMouseLeftDown() {
+    printf(this->left ? "MOUSE: true\n" : "MOUSE :false\n");
     return this->left;
 }
 
 void Mouse::setMouseButtons(bool left, bool right, bool middle) {
+    //printf(this->left ? "MOUSE SET: true\n" : "MOUSE SET: false\n");
     this->left = left;
     this->right = right;
     this->middle = middle;

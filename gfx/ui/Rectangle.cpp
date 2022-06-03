@@ -11,37 +11,20 @@ Rectangle::Rectangle() {
     b = 10;
 };
 
-void Rectangle::render(char * imageBuffer, int lineLength) {
-    u_int64_t location;
+void Rectangle::render(Framebuffer fb) {
     for(int i = x; i < x+width; i++) {
-        location =  i * 4 + y * lineLength;
-        
-        *(imageBuffer + location + 0) = b;
-        *(imageBuffer + location + 1) = g;
-        *(imageBuffer + location + 2) = r;
+        fb.setPixel(i,y,r,g,b);
     }
     for(int i = y; i < y+height; i++) {
-        location =  x * 4 + i * lineLength;
-        
-        *(imageBuffer + location + 0) = b;
-        *(imageBuffer + location + 1) = g;
-        *(imageBuffer + location + 2) = r;
+        fb.setPixel(x,i,r,g,b);
     }
     for(int i = x; i < x+width; i++) {
-        location =  i * 4 + (y+height) * lineLength;
-        
-        *(imageBuffer + location + 0) = g;
-        *(imageBuffer + location + 1) = g;
-        *(imageBuffer + location + 2) = r;
+        fb.setPixel(i,y+height,r,g,b);
     }
     for(int i = y; i < y+height; i++) {
-        location =  (x+width) * 4 + i * lineLength;
+        fb.setPixel(x+width,i,r,g,b);
         
-        *(imageBuffer + location + 0) = b;
-        *(imageBuffer + location + 1) = g;
-        *(imageBuffer + location + 2) = r;
     }
-    *(imageBuffer + location + 4) = 0x0;
 };
 
 void Rectangle::setDimensions(int width, int height) {

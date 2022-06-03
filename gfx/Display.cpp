@@ -20,24 +20,24 @@ void Display::beginDisplay() {
   printf("Opening %s...\n", fbPath.c_str());
   fbfd = open(fbPath.c_str(), O_RDWR);
 
-  if (fbfd == -1) {
+  if (fbfd == -1) { // File could not be opened
       printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot open framebuffer device\n" ANSI_COLOR_RESET , displayNumber);
-      logger->logException(1);
-      exit(1);
+      logger->logException(1,2);
   }
+
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
   printf("The framebuffer device was opened successfully.\n");
 
   // Get fixed screen information
   if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo) == -1) {
      printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read fixed information\n" ANSI_COLOR_RESET , displayNumber);
-      exit(2);
+     logger->logException(2,2);
   }
 
   // Get variable screen information
   if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo) == -1) {
       printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot read variable information\n" ANSI_COLOR_RESET , displayNumber);
-      exit(3);
+      logger->logException(3,2);
   }
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
   printf("Screen-Res: %dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
@@ -49,7 +49,7 @@ void Display::beginDisplay() {
   fbp = (char *) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
   if (fbp == NULL) {
       printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot map framebuffer to memory\n" ANSI_COLOR_RESET, displayNumber);
-      exit(4);
+      logger->logException(4,2);
   }
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
   printf("The framebuffer device was mapped to memory successfully.\n");
@@ -57,8 +57,9 @@ void Display::beginDisplay() {
   imageBuffer = (char *) malloc(screensize);
   if(imageBuffer ==  NULL) {
     printf(ANSI_COLOR_RED "[DISPLAY] ("  ANSI_COLOR_BLUE "%d" ANSI_COLOR_RED ") Error: cannot allocate " ANSI_COLOR_BLUE "%u" ANSI_COLOR_RED " bytes for imageBuffer\n" ANSI_COLOR_RESET , displayNumber);
-    exit(5);
-  }
+    logger->logException(5,2);
+  } 
+
   printf(ANSI_COLOR_CYAN);
   printf("#### DISPLAY DEBUG ####\n");
   printf("Instance: %u (0x%x)\n", this->displayNumber, this);
@@ -70,8 +71,12 @@ void Display::beginDisplay() {
 }
 
 Display::Display() {
-
+  
 };
+
+fb_var_screeninfo Display::getScreenInfo() {
+  return this->vinfo;
+}
 
 Display::Display(int displayNumber) {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "DISPLAY" ANSI_COLOR_RESET "] ");
@@ -83,6 +88,7 @@ Display::Display(int displayNumber) {
 int Display::getLineLength() {
   return finfo.line_length;
 };
+
 
 char* Display::getFrameBuffer() {
   return imageBuffer;

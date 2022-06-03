@@ -17,8 +17,9 @@ void Image::loadImage(char *path)
   printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", width, height, channels);
 };
 
-void Image::render(char * imageBuffer, int lineLength)
+void Image::render(Framebuffer fb)
 {
+  /*
   int posX = 0, posY = 0; // Used for iteration
   u_int64_t location = 0; // Location of Pixel
 
@@ -58,6 +59,7 @@ void Image::render(char * imageBuffer, int lineLength)
       }
     }
   }
+  */
 };
 
 void Image::setPos(int x, int y)

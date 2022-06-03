@@ -3,7 +3,7 @@
 #include "UiObject.hpp"
 #include "Rectangle.hpp"
 #include "../bitmapfont/Font.cpp"
-
+#include "../Framebuffer.hpp"
 
 
 #ifndef TEXT_HPP
@@ -21,7 +21,7 @@ class Text : public UiObject {
         Text(std::string s);
         Text(char* s);
         void setColor(char r, char g, char b);
-        void render(char * imageBuffer, int lineLength);
+        void render(Framebuffer fb);
         void setText(std::string text);
         void setPos(int x, int y);
         int getCharCount();

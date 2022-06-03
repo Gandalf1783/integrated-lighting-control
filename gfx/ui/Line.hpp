@@ -1,4 +1,5 @@
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
 
 #ifndef LINE_HPP
 #define LINE_HPP
@@ -12,7 +13,7 @@ class Line : public UiObject {
         Line();
         void setFrom(int x, int y);
         void setTo(int x, int y);
-        void render(char * imageBuffer, int lineLength);
+        void render(Framebuffer fb);
         void mouseMoveEvent(int x, int y);
         void freeMemory();
         void mouseReleasedEvent();

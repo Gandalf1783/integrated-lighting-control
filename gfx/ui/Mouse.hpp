@@ -1,4 +1,5 @@
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
 
 #ifndef MOUSE_HPP
 #define MOUSE_HPP
@@ -11,7 +12,7 @@ class Mouse : public UiObject {
         int dX, dY;
     public:
         Mouse();
-        void render(char * imageBuffer, int lineLength);
+        void render(Framebuffer fb);
         void setPos(int x, int y);
         void setDelta(int dX, int dY);
         int getX();

@@ -37,6 +37,8 @@ class Display {
     void renderDisplay();
     void testRender();
     void stopDisplay();
+    fb_var_screeninfo getScreenInfo();
+    void putPixel(int x, int y, char r, char g, char b, char a);
 };
 
 #endif

@@ -63,6 +63,7 @@ void UiManager::renderDisplays() {
     mouseY = this->m->getDY();
     this->mouseMoveEvent(mouseX, mouseY);
     if(this->m->getMouseLeftDown()) {
+      printf("UI MANAGER MOUSE DOWN\n");
       this->mouseOnDownEvent(this->m->getX(), this->m->getY());
     }
     if(this->m->getMouseReleased() == true) {
@@ -74,16 +75,28 @@ void UiManager::renderDisplays() {
     for(Display* d: displayArray) {
       char * framebuffer = d->getFrameBuffer();
       int lineLength = d->getLineLength();
+      Framebuffer fb;
+      fb.createFramebuffer(d->getScreenInfo().xres, d->getScreenInfo().yres);
+
       // printf("uiArray: %x\n", uiArray);
       // printf("&uiArray: %x\n", &uiArray);
+      
       for(UiObject* pObject : uiArray) {
         // printf("[RENDER] (%x) Rendering Object...", pObject);
-        pObject->render(framebuffer, lineLength);
+        pObject->render(fb);
         
       } 
-      this->m->render(framebuffer, lineLength);
+
+      this->m->render(fb);
+
+      unsigned char * fbCopy = fb.copyFramebuffer();
+
+      memcpy(d->getFrameBuffer(), fbCopy, (d->getScreenInfo().xres * d->getScreenInfo().yres * 4));
 
       d->renderDisplay();
+
+      free(fbCopy);
+      fb.destroyFramebuffer();
     }
     
 
@@ -95,7 +108,7 @@ void UiManager::addDisplay(Display* d) {
   displayArray.push_back(d);
   
   Window* w = new Window("Test!");
-  Window* w2 = new Window("Systemeinstellungen!");
+  //Window* w2 = new Window("Systemeinstellungen!");
   
 
   //w2->addUiObject(i);
@@ -105,7 +118,7 @@ void UiManager::addDisplay(Display* d) {
   //w->addUiObject(pBar);
 
   //uiArray.push_back(i);
-  uiArray.push_back(w2);
+  //uiArray.push_back(w2);
   uiArray.push_back(w);
   //uiArray.push_back(i);
 }
@@ -162,4 +175,5 @@ void UiManager::mouseOnRightClickEvent(int x, int y) {
 
 void UiManager::setMouse(Mouse* m) {
   this->m = m;
+  printf("MOUSE HAS BEEN SET!\n");
 }

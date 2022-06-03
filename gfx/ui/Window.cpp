@@ -6,10 +6,7 @@ Window::Window(std::string title) {
     width = 600;
     height = 600;
 
-    screensizeInBytes = 4096*height*4; // *4 bytes (contains the rgba values)
-
-    windowFramebuffer = (char *) malloc(screensizeInBytes);
-    printf("WindowBuffer was created with %u bytes\n", screensizeInBytes);
+    windowFb.createFramebuffer(width, height-titleHeight);
 
     this->title = new Text();
     this->title->setText(title);
@@ -19,8 +16,6 @@ Window::Window(std::string title) {
     t->setPos(5,3);
     t->setText("Hello, i'm a text!");
     t->setColor(255,0,0);
-
-
     
     this->uiObjects.push_back(t);
     this->stop = false;
@@ -28,65 +23,44 @@ Window::Window(std::string title) {
 };
 
 
-void Window::render(char * imageBuffer, int lineLength) {
+void Window::render(Framebuffer fb) {
     if(this->stop) 
         return;
-    u_int64_t location;
-    
-    windowFramebuffer = (char *) memset(windowFramebuffer, 0x0, screensizeInBytes);
-
-    // if(y<500)
-    //     y++;
-    // if(x<500) 
-    //     x++;
     
     for(int i = x; i < x+width; i++) {
         for(int j = y; j < y+height; j++) {
-            location =  i * 4 +
-                        j * lineLength;
-            
-            *(imageBuffer + location) = 0xFF; //b
-            *(imageBuffer + location + 1) = 0x0; //g
-            *(imageBuffer + location + 2) = 0x0; //r
-            *(imageBuffer + location + 3) = 0x0; // a
+            fb.setPixel(i,j,0,0,0xFF);
         }
     }
 
     this->title->setPos(x+(width/2)-(this->title->getCharCount()*8/2),y+(titleHeight/2)-7); // Center the Text
-    this->title->render(imageBuffer,lineLength);
+    this->title->render(fb);
 
     for(int i = 0; i < width; i++) {
         for(int j = 0; j < height; j++) {
-            location =  i * 4 +
-                        j * lineLength;
-            
-            *(windowFramebuffer + location) = 0xA0; //b
-            *(windowFramebuffer + location + 1) = 0xA0; //g
-            *(windowFramebuffer + location + 2) = 0xA0; //r
-            *(windowFramebuffer + location + 3) = 0x0; // a
+            windowFb.setPixel(i,j,0xA0,0xA0,0xA0);
         }
     }
     
     for(UiObject* uiObject : uiObjects) {
-        uiObject->render(windowFramebuffer,lineLength);
+        uiObject->render(this->windowFb);
     }
 
-    for(int j = 0; j < height; j++) {
-        u_int64_t test = (j)*lineLength;
-        u_int64_t test2 = x*4+(y+j+titleHeight)*lineLength;
-        memcpy(imageBuffer+(test2), windowFramebuffer+(test), width*4);
-    }
+    fb.integrateFramebuffer(this->windowFb, 0,0,this->width, this->height-this->titleHeight, this->x, this->y+titleHeight);
+
 };
 
 void Window::setPos(int x, int y) {
     if(this->stop) 
         return;
-    
-    if(x+width>1024 || x < 0)
+
+    printf("(%d|%d)\n", x,y);
+    /*
+    if(x+width>1920 || x < 0)
         return;
-    if(y+height+titleHeight>768 || y < 0)
+    if(y+height+titleHeight>1080 || y < 0)
         return;
-        
+      */  
     printf("y+height: %d\n ", (y+height));
     this->x = x;
     this->y = y;
@@ -102,8 +76,10 @@ void Window::addUiObject(UiObject* object) {
 void Window::mouseMoveEvent(int x, int y) {
     if(this->stop) 
             return;
+            
     if(this->isMouseDown) {
-        this->setPos(this->x+x,this->y+y);
+        printf("SETTING PIXELS\n");
+        this->setPos(x,y);
         /*
         // If cursor is inside titleBar:
         if(x >= this->x && x < this->x+this->width) {
@@ -124,6 +100,7 @@ void Window::mouseReleasedEvent(int x, int y) {
 }
 
 void Window::mouseDownEvent() {
+    printf("MOUSE DOWN\n");
     this->isMouseDown = true;
 }
 
@@ -134,6 +111,6 @@ void Window::freeMemory() {
     }
     this->uiObjects.clear();
     this->title->freeMemory();
+    this->windowFb.destroyFramebuffer();
     delete this->title;
-    free(this->windowFramebuffer); // Free the space the window needs (imageBuffer)
 };

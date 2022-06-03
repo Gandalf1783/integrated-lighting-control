@@ -1,4 +1,5 @@
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
 
 #ifndef Button_HPP
 #define Button_HPP
@@ -11,7 +12,7 @@ class Button: public UiObject {
         char colorUnpressed = 0x80;
     public:
         Button();
-        void render(char * imageBuffer, int lineLength) = 0;
+        void render(Framebuffer fb);
         void mouseMoveEvent(int x, int y);
         void freeMemory();
         void mouseReleasedEvent(int x, int y);

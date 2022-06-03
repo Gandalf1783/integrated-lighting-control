@@ -1,4 +1,5 @@
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
 
 #ifndef PROGRESSBAR_HPP
 #define PROGRESSBAR_HPP
@@ -12,7 +13,7 @@ class ProgressBar : public UiObject {
         int maxProgress; // Maximal zu erreichner Fortschritt
         long progress; // Fortschritt aktuell
         ProgressBar(); // Constructor
-        void render(char * imageBuffer, int lingeLength); // Rendermethode
+        void render(Framebuffer fb); // Rendermethode
         void setPos(int x, int y); // Position setzen
         void setDimensions(int width, int height);
         void mouseMoveEvent(int x, int y);

@@ -1,4 +1,5 @@
 #include "UiObject.hpp"
+#include "../Framebuffer.hpp"
 
 #ifndef CONTEXTMENU_HPP
 #define CONTEXTMENU_HPP
@@ -8,7 +9,7 @@ class ContextMenu : public UiObject {
         int x,y;
     public:
         ContextMenu();
-        void render(char * imageBuffer, int lineLength) = 0;
+        void render(Framebuffer fb);
         void mouseMoveEvent(int x, int y);
         void freeMemory();
         void mouseReleasedEvent(int x, int y);

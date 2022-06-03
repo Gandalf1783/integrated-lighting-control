@@ -23,8 +23,7 @@ void Text::setText(std::string text) {
     this->text = text;
 }
 
-void Text::render(char * imageBuffer, int lineLength) {
-    u_int64_t location;
+void Text::render(Framebuffer fb) {
     for(int i = 0; i < text.size(); i++) {
         char c = text[i];
         if(c > 31 && c < 127) {
@@ -33,12 +32,8 @@ void Text::render(char * imageBuffer, int lineLength) {
         for(int j = 12; j > 0; j--) {
             char d = font[c][j];
             for(int k = 0; k < 8; k++) {
-                location =  ((x+(i*8+abs(k-8))) * 4) + ((y+abs(j-12)) * lineLength);
                 if(((d>>k) & 0x1) == true) {
-                    *(imageBuffer + location) = b;
-                    *(imageBuffer + location +1) = g;
-                    *(imageBuffer + location +2) = r;
-                    *(imageBuffer + location +3) = 0x0;
+                    fb.setPixel((x+(i*9+abs(k-8))) ,(y+abs(j-12)),r,g,b);
                 }
             }
         }

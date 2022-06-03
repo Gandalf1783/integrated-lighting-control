@@ -1,4 +1,4 @@
-
+#include "../Framebuffer.hpp"
 #include "UiObject.hpp"
 #include <string.h>
 #include <vector>
@@ -8,13 +8,12 @@
 #include "Image.hpp"
 
 
+
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
 
 class Window : public UiObject {
-
-
     private:
         int x,y;
         int width,height;
@@ -22,12 +21,13 @@ class Window : public UiObject {
         Text *title;
         std::vector<UiObject*> uiObjects;
         u_int64_t screensizeInBytes;
-        char * windowFramebuffer;
+        
+        Framebuffer windowFb;
         bool stop;
         bool isMouseDown;
     public:
         Window(std::string title);
-        void render(char * imageBuffer, int lineLength);
+        void render(Framebuffer fb);
         void setPos(int x, int y);
         void addUiObject(UiObject* object);
         void mouseMoveEvent(int x, int y);

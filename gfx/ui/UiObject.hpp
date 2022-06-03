@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "../Framebuffer.hpp"
 
 #ifndef UIOBJECT_H
 #define UIOBJECT_H
@@ -16,7 +17,7 @@ class UiObject {
   public:
     UiObject();
     uiObjectInfo getUiObjectInfo();
-    virtual void render(char * imageBuffer, int lineLength) = 0;
+    virtual void render(Framebuffer fb) = 0;
     //virtual bool isHovering() = 0;
     virtual void mouseMoveEvent(int x, int y) = 0;
     virtual void mouseDownEvent() = 0;

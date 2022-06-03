@@ -1,7 +1,10 @@
 #include "LogEvent.hpp"
 
-LogEvent::LogEvent(int errorID, int errorSource) {
+#include "../gfx/Display.hpp"
 
+LogEvent::LogEvent(int errorID, int errorSource) {
+    this->errorID = errorID;
+    this->errorSource = errorSource;
 };
 
 int LogEvent::getErrorID() {

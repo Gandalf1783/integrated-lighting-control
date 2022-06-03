@@ -1,5 +1,15 @@
 #include "InputManager.hpp"
 
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <thread>
+#include <poll.h>
+
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -30,30 +40,37 @@ void InputManager::inputThread() {
     int bytes; // Number of bytes
     char byte[3]; // Datastream (no longer than 3 bytes)
 
+
+    pollfd pfd[1];
+    pfd[0].fd = inputFd;
+    pfd[0].events = POLLIN;
     while(!this->shouldStop)
     {
         // Read Mouse     
-        bytes = read(inputFd, byte, sizeof(byte));
+        if(poll(pfd, 1, 500) <= 0) {
+            continue;
+        } else {
+            bytes = read(inputFd, byte, sizeof(byte));
 
-        if(bytes > 0)
-        {
-            left = byte[0] & 0x1;
-            right = byte[0] & 0x2;
-            middle = byte[0] & 0x4;
+            if(bytes > 0)
+            {
+                left = byte[0] & 0x1;
+                right = byte[0] & 0x2;
+                middle = byte[0] & 0x4;
 
-            x = byte[1];
-            y = byte[2];
-           // printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
-            this->m->setDelta(x,y);
-            this->m->setMouseButtons(left, right, middle);
-            if(this->previousLeftClick == true && left == false) {
-//                printf("Calling Mouse Release!\n\n");
-                this->m->mouseRelease();
-            }
-            this->previousLeftClick = left;
-        }   
+                x = byte[1];
+                y = byte[2];
+            // printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
+                this->m->setDelta(x,y);
+                this->m->setMouseButtons(left, right, middle);
+                if(this->previousLeftClick == true && left == false) {
+    //                printf("Calling Mouse Release!\n\n");
+                    this->m->mouseRelease();
+                }
+                this->previousLeftClick = left;
+            } 
+        }
     }
-
     close(inputFd);
 }
 

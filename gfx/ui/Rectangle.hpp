@@ -1,5 +1,6 @@
 #include "UiObject.hpp"
 
+#include "../Framebuffer.hpp"
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
 
@@ -10,7 +11,7 @@ class Rectangle : public UiObject {
         int r,g,b;
     public:
         Rectangle();
-        void render(char * imageBuffer, int lineLength);
+        void render(Framebuffer fb);
         void setPos(int x, int y);
         void setDimensions(int width, int height);
         void setColor(char r, char g, char b);

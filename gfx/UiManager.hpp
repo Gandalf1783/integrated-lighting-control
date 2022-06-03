@@ -13,6 +13,7 @@
 #include "ui/Window.hpp"
 #include "ui/Line.hpp"
 #include "ui/Mouse.hpp"
+#include "Framebuffer.hpp"
 #include <chrono>
 #include <thread>
 

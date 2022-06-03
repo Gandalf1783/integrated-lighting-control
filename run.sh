@@ -1,5 +1,7 @@
 clear
+
 echo "Compiling..."
+mkdir -p build/
 echo "Main" &&
 g++ -c main.cpp -o build/main.o &&
 echo "Display" &&
@@ -16,7 +18,7 @@ echo "Font" &&
 g++ -c gfx/bitmapfont/Font.cpp -o build/Font.o &&
 echo "Text" &&
 g++ -c gfx/ui/Text.cpp -o build/Text.o &&
-echo "Rectangle"
+echo "Rectangle" &&
 g++ -c gfx/ui/Rectangle.cpp -o build/Rectangle.o &&
 echo "Window" &&
 g++ -c gfx/ui/Window.cpp -o build/Window.o &&
@@ -36,9 +38,12 @@ echo "Log" &&
 g++ -c log/Log.cpp -o build/Log.o &&
 echo "LogEvent" && 
 g++ -c log/LogEvent.cpp -o build/LogEvent.o &&
+echo "Framebuffer" &&
+g++ -c gfx/Framebuffer.cpp -o build/Framebuffer.o &&
 echo "Linking..." &&
 #g++ -g3 build/*o -pthread && echo "Running" && ./a.out
 g++ -fsanitize=undefined,address -g3 build/*.o -pthread && echo "Running..." && ./a.out
 
+echo ""
 echo "Removing all Object-Files"
 rm build/*

@@ -70,7 +70,6 @@ bool Mouse::getMouseReleased() {
     return ret;
 }
 bool Mouse::getMouseLeftDown() {
-    printf(this->left ? "MOUSE: true\n" : "MOUSE :false\n");
     return this->left;
 }
 

@@ -12,8 +12,6 @@ void Framebuffer::createFramebuffer(int sizeX, int sizeY) {
     this->framebuffer = (unsigned char *) malloc(sizeX * sizeY * 4); // Assume Format: BGRA (4 channels á 1 Byte)
     
     this->canBeUsed = true;
-    
-    printf("VIRTUAL FRAMEBUFFER CREATED WITH (%d|%d)\n", this->sizeX, this->sizeY);
 };
 
 
@@ -82,7 +80,7 @@ void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int 
         return;
     if(foreignWidth < 0 || foreignHeight < 0)
         return;
-        
+
     boundsX = minInt(minInt(foreignWidth,  foreignFb.getSizeX()), this->sizeX);
     boundsY = minInt(minInt(foreignHeight, foreignFb.getSizeY()), this->sizeY);
 
@@ -90,18 +88,18 @@ void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int 
     foreignFramebuffer = foreignFb.getFramebuffer();
 
     char r,g,b;
-
-    printf("INTEGRATE: boundsY: %d | foreignY: %d \n", boundsY, foreignY);
     
     for(int y = foreignY; y < boundsY; y++) {
         
         for(int x = foreignX; x < boundsX; x++) {
             
             int location = x*4 + y * foreignFb.getSizeX() * 4;
+            
 
-            b = *(foreignFramebuffer);
-            g = *(foreignFramebuffer +1);
-            r = *(foreignFramebuffer +2);
+
+            b = *(foreignFramebuffer + location);
+            g = *(foreignFramebuffer + location+1);
+            r = *(foreignFramebuffer + location+2);
 
             this->setPixel(localX+x, localY+y, r,g,b);
 

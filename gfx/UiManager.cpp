@@ -22,22 +22,36 @@ UiManager::UiManager() {
 };
 
 void UiManager::stop() {
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Cleaning Up...\n");
+
   for(Display* d : displayArray) {
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+    printf("Deleting Display...\n");
     d->stopDisplay();
     delete d;
   }
   this->displayArray.clear();
-
+  
   for(UiObject* o : uiArray) {
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+    printf("Deleting UiObject...\n");
     o->freeMemory(); // Free all memory that is inside the objects
     delete o; // Delete the Object
   }
+  
   this->uiArray.clear();
+
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Changing to text mode & returning tty1\n");
+
   ioctl(ttyfd, KDSETMODE, KD_TEXT);
   ioctl(ttyfd,VT_ACTIVATE,1);
   ioctl(ttyfd, VT_WAITACTIVE, 1);
   close(ttyfd);
-  printf("Changing to text mode and acquiring tty1\n");
+  
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Cleanup " ANSI_COLOR_GREEN "done" ANSI_COLOR_RESET "\n");
 };
 
 void UiManager::renderDisplays() {
@@ -63,7 +77,6 @@ void UiManager::renderDisplays() {
     mouseY = this->m->getDY();
     this->mouseMoveEvent(mouseX, mouseY);
     if(this->m->getMouseLeftDown()) {
-      printf("UI MANAGER MOUSE DOWN\n");
       this->mouseOnDownEvent(this->m->getX(), this->m->getY());
     }
     if(this->m->getMouseReleased() == true) {
@@ -175,5 +188,4 @@ void UiManager::mouseOnRightClickEvent(int x, int y) {
 
 void UiManager::setMouse(Mouse* m) {
   this->m = m;
-  printf("MOUSE HAS BEEN SET!\n");
 }

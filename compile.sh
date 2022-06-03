@@ -41,4 +41,4 @@ echo "Framebuffer" &&
 g++ -c gfx/Framebuffer.cpp -o build/Framebuffer.o &&
 echo "Linking..." &&
 #g++ -g3 build/*o -pthread && echo "Running" && ./a.out
-g++ -fsanitize=undefined,address -g3 build/*.o -pthread &&
+g++ -fsanitize=undefined,address -g3 build/*.o -pthread

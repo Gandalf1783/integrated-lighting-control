@@ -36,12 +36,13 @@ void Window::render(Framebuffer fb) {
     this->title->setPos(x+(width/2)-(this->title->getCharCount()*8/2),y+(titleHeight/2)-7); // Center the Text
     this->title->render(fb);
 
+
     for(int i = 0; i < width; i++) {
         for(int j = 0; j < height; j++) {
-            windowFb.setPixel(i,j,0xA0,0xA0,0xA0);
+            windowFb.setPixel(i,j,(0xFF-i),0xA0,0xA0);
         }
     }
-    
+  
     for(UiObject* uiObject : uiObjects) {
         uiObject->render(this->windowFb);
     }
@@ -53,15 +54,7 @@ void Window::render(Framebuffer fb) {
 void Window::setPos(int x, int y) {
     if(this->stop) 
         return;
-
-    printf("(%d|%d)\n", x,y);
-    /*
-    if(x+width>1920 || x < 0)
-        return;
-    if(y+height+titleHeight>1080 || y < 0)
-        return;
-      */  
-    printf("y+height: %d\n ", (y+height));
+        
     this->x = x;
     this->y = y;
 };
@@ -78,7 +71,7 @@ void Window::mouseMoveEvent(int x, int y) {
             return;
             
     if(this->isMouseDown) {
-        printf("SETTING PIXELS\n");
+        //printf("SETTING PIXELS\n");
         this->setPos(x,y);
         /*
         // If cursor is inside titleBar:
@@ -100,7 +93,7 @@ void Window::mouseReleasedEvent(int x, int y) {
 }
 
 void Window::mouseDownEvent() {
-    printf("MOUSE DOWN\n");
+    //printf("MOUSE DOWN\n");
     this->isMouseDown = true;
 }
 

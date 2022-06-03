@@ -17,8 +17,7 @@ Log* logger = new Log();
 
 int main()
 {
-
-  cout<<"Starting...";
+  printf("Starting\n\n");
 
   Mouse* m = new Mouse();
   UiManager* uiManager = new UiManager();
@@ -36,9 +35,11 @@ int main()
   uiManager->startThread();
   im->setMouse(m);
   im->startThread();
-  sleep_for(25s);
+  printf("[MAIN] FREERUN >>ACTIVE<<\n");
 
-  printf("[MAIN] STOPPING\n\n");
+  sleep_for(5s);
+
+  printf("[MAIN] STOPPING\n");
   
   uiManager->stopThread();
   uiManager->stop();
@@ -48,7 +49,7 @@ int main()
   serial->stop();
 
 
-  printf("Deleting last references...\n");
+  printf("[MAIN] Deleting last references...\n");
   delete uiManager;
   delete im;
   delete m;

@@ -70,6 +70,7 @@ bool Mouse::getMouseReleased() {
     return ret;
 }
 bool Mouse::getMouseLeftDown() {
+    
     return this->left;
 }
 

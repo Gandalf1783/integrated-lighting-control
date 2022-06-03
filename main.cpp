@@ -37,7 +37,7 @@ int main()
   im->startThread();
   printf("[MAIN] FREERUN >>ACTIVE<<\n");
 
-  sleep_for(5s);
+  sleep_for(25s);
 
   printf("[MAIN] STOPPING\n");
   

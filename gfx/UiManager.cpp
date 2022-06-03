@@ -8,6 +8,15 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+
+/*
+  #############
+  # This is the UI Manager. It manages (obviously) everything UI related.
+  # It aquires the tty and gives it back as soon as the stop methods are called. 
+  #############
+*/
+
+
 UiManager::UiManager() {
   std::cout<<"Acquiring "<<ANSI_COLOR_YELLOW<<"tty2"<<ANSI_COLOR_RESET<<" and changing to graphics mode...\n";
   ttyfd = open("/dev/tty2", O_RDWR);
@@ -21,38 +30,16 @@ UiManager::UiManager() {
   this->work_time = timeA-timeB;
 };
 
-void UiManager::stop() {
-  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
-  printf("Cleaning Up...\n");
 
-  for(Display* d : displayArray) {
-    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
-    printf("Deleting Display...\n");
-    d->stopDisplay();
-    delete d;
-  }
-  this->displayArray.clear();
+void UiManager::addDisplay(Display* d) {
+  displayArray.push_back(d);
   
-  for(UiObject* o : uiArray) {
-    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
-    printf("Deleting UiObject...\n");
-    o->freeMemory(); // Free all memory that is inside the objects
-    delete o; // Delete the Object
-  }
-  
-  this->uiArray.clear();
+  //Window* w = new Window("Test!");
+  Window* w2 = new Window("Systemeinstellungen!");
 
-  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
-  printf("Changing to text mode & returning tty1\n");
-
-  ioctl(ttyfd, KDSETMODE, KD_TEXT);
-  ioctl(ttyfd,VT_ACTIVATE,1);
-  ioctl(ttyfd, VT_WAITACTIVE, 1);
-  close(ttyfd);
-  
-  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
-  printf("Cleanup " ANSI_COLOR_GREEN "done" ANSI_COLOR_RESET "\n");
-};
+  uiArray.push_back(w2);
+  //uiArray.push_back(w);
+}
 
 void UiManager::renderDisplays() {
   printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "]");
@@ -80,9 +67,8 @@ void UiManager::renderDisplays() {
       this->mouseOnDownEvent(this->m->getX(), this->m->getY());
     }
     if(this->m->getMouseReleased() == true) {
-//      printf("IMMA CALL MOUSE RELEASE!\n");
       this->mouseOnReleaseEvent(this->m->getX(), this->m->getY());
-    }
+    
 
     // RENDER CODE:
     for(Display* d: displayArray) {
@@ -117,24 +103,6 @@ void UiManager::renderDisplays() {
   }
 };
 
-void UiManager::addDisplay(Display* d) {
-  displayArray.push_back(d);
-  
-  Window* w = new Window("Test!");
-  //Window* w2 = new Window("Systemeinstellungen!");
-  
-
-  //w2->addUiObject(i);
-  //printf("Image pointer: %x\n", &i);
-  //uiArray.push_back(t);
-  //w->addUiObject(i);
-  //w->addUiObject(pBar);
-
-  //uiArray.push_back(i);
-  //uiArray.push_back(w2);
-  uiArray.push_back(w);
-  //uiArray.push_back(i);
-}
 void UiManager::addUiObject(UiObject* o) {
   this->uiArray.push_back(o);
 };
@@ -145,27 +113,28 @@ void UiManager::startThread() {
     uiManagerThread = std::thread(&UiManager::renderDisplays, this);
 };
 
-void UiManager::stopThread() {
-  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
-  printf("Stopping Thread\n");
-  this->shouldStop = true;
-  uiManagerThread.join();
-  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
-  printf("Thread has stopped.\n");
-};
-
-
-void UiManager::mouseMoveEvent(int x, int y) {
-  for(UiObject* o : uiArray) {
-      o->mouseMoveEvent(x,y);
-  }
-};
-
 void UiManager::closeWindow(Window* window) {
   for(UiObject* o : uiArray) {
     if(o == window) {
       o->freeMemory();
     }
+  }
+};
+
+
+/*
+  ################
+  # MOUSE EVENTS #
+  ################
+*/
+
+void UiManager::setMouse(Mouse* m) {
+  this->m = m;
+}
+
+void UiManager::mouseMoveEvent(int x, int y) {
+  for(UiObject* o : uiArray) {
+      o->mouseMoveEvent(x,y);
   }
 };
 
@@ -182,10 +151,53 @@ void UiManager::mouseOnReleaseEvent(int x, int y) {
   }
 };
 
-void UiManager::mouseOnRightClickEvent(int x, int y) {
+void UiManager::mouseOnRightClickEvent(int x, int y) {};
 
+/*
+  ##################
+  # STOP FUNCTIONS #
+  ##################
+*/
+
+
+void UiManager::stopThread() {
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
+  printf("Stopping Thread\n");
+  this->shouldStop = true;
+  uiManagerThread.join();
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "RENDER" ANSI_COLOR_RESET "] ");
+  printf("Thread has stopped.\n");
 };
 
-void UiManager::setMouse(Mouse* m) {
-  this->m = m;
-}
+void UiManager::stop() {
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Cleaning Up...\n");
+
+  for(Display* d : displayArray) {
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+    printf("Deleting Display...\n");
+    d->stopDisplay();
+    delete d;
+  }
+  this->displayArray.clear();
+  
+  for(UiObject* o : uiArray) {
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+    printf("Deleting UiObject...\n");
+    o->freeMemory(); // Free all memory that is inside the objects
+    delete o; // Delete the Object
+  }
+  
+  this->uiArray.clear();
+
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Changing to text mode & returning tty1\n");
+
+  ioctl(ttyfd, KDSETMODE, KD_TEXT);
+  ioctl(ttyfd,VT_ACTIVATE,1);
+  ioctl(ttyfd, VT_WAITACTIVE, 1);
+  close(ttyfd);
+  
+  printf(ANSI_COLOR_RESET "[" ANSI_COLOR_GREEN "UIMANAGER" ANSI_COLOR_RESET "] ");
+  printf("Cleanup " ANSI_COLOR_GREEN "done" ANSI_COLOR_RESET "\n");
+};

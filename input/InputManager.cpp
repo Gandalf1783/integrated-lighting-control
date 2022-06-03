@@ -47,13 +47,13 @@ void InputManager::inputThread() {
     while(!this->shouldStop)
     {
         // Read Mouse     
-        if(poll(pfd, 1, 500) <= 0) {
+        if(poll(pfd, 1, 500) <= 0) { // Sees if any data has been received in 500ms. If not, just continue.
             continue;
         } else {
-            bytes = read(inputFd, byte, sizeof(byte));
+            bytes = read(inputFd, byte, sizeof(byte)); // Read the received bytes.
 
             if(bytes > 0)
-            {
+            { // Now just pass them around into their variables
                 left = byte[0] & 0x1;
                 right = byte[0] & 0x2;
                 middle = byte[0] & 0x4;
@@ -61,13 +61,14 @@ void InputManager::inputThread() {
                 x = byte[1];
                 y = byte[2];
             // printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
-                this->m->setDelta(x,y);
-                this->m->setMouseButtons(left, right, middle);
-                if(this->previousLeftClick == true && left == false) {
-    //                printf("Calling Mouse Release!\n\n");
+                this->m->setDelta(x,y); // Move the mouse X/Y globally
+                this->m->setMouseButtons(left, right, middle); // The current State of the buttons
+
+                if(this->previousLeftClick == true && left == false) { // If it was pressed before, and now it isnt, call mouseRelease event
                     this->m->mouseRelease();
                 }
-                this->previousLeftClick = left;
+
+                this->previousLeftClick = left; // set the previous variable
             } 
         }
     }
@@ -77,21 +78,21 @@ void InputManager::inputThread() {
 void InputManager::startThread() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
     printf("Starting InputManager\n");
-    inputManagerThread = std::thread(&InputManager::inputThread, this);
+    inputManagerThread = std::thread(&InputManager::inputThread, this); // Starts a new thread for the input mechanism
 };
 
 
-void InputManager::stopThread() {
+void InputManager::stopThread() { // Just stops the input manager.
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
     printf("Stopping InputManager...\n");
     this->shouldStop = true;
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
     printf("Joining Thread...");
-    this->inputManagerThread.join();
+    this->inputManagerThread.join(); // Wait until Thread has exited. 
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
     printf("Done.\n");
 };
 
 void InputManager::setMouse(Mouse* m) {
-    this->m = m;
+    this->m = m; // Set the global Mouse reference.
 }

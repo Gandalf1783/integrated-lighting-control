@@ -8,6 +8,13 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+
+/*
+    # This Log can hold up multiple LogEvents.
+    # If it triggers an exception, it will create a new one and exit immidiately.
+    # Will be able to print out the Log to a file
+*/
+
 Log::Log() {
     this->logLength = 0;
 };

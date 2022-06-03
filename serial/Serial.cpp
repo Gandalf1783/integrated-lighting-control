@@ -63,23 +63,23 @@ void Serial::start() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_MAGENTA "SERIAL" ANSI_COLOR_RESET "] ");
     printf("SerialPort " ANSI_COLOR_YELLOW "ttyS0" ANSI_COLOR_RESET " was opened!\n");
 
-    write(fdSerialPort, msg, sizeof(msg));
+
+    write(fdSerialPort, msg, sizeof(msg)); // Writes data
 
 
+    // Ready data:
     int num_bytes = read(fdSerialPort, &read_buf, sizeof(read_buf));
-
     if (num_bytes < 0) {
         printf("Error reading: %d", errno);
         return;
     }
-
     printf("Read %i bytes. Received message: %s", num_bytes, read_buf);
 
 }
 
 void Serial::stop() {
     
-    if(fdSerialPort < 0) {
+    if(fdSerialPort < 0) { // If serial was never opened, just return. Nothing to close.
         return;
     }
 

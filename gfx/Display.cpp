@@ -11,6 +11,13 @@
 
 using std::string;
 
+/*
+  ########
+  # This is the Display class. It openes a framebuffer and provides the render/write Methods to other UiObjects.
+  ########
+ */
+
+
 extern Log* logger;
 
 void Display::beginDisplay() {

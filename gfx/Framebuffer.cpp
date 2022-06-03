@@ -1,5 +1,12 @@
 #include "Framebuffer.hpp"
 
+/*
+    This class is a Framebuffer and is used to store Video Data in a 2d array.
+
+    It just manages some simple functions like setting a pixel and creating/destroying it.
+*/
+
+
 int minInt(int a, int b) {
     return ( a < b ? a : b);
 };
@@ -15,7 +22,7 @@ void Framebuffer::createFramebuffer(int sizeX, int sizeY) {
 };
 
 
-void Framebuffer::setPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b) {
+void Framebuffer::setPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b) { // Sets a pixel after checking for certain error-conditions, especially out of bounds.
     
     if(x >= this->sizeX || x < 0)
         return;
@@ -39,11 +46,11 @@ void Framebuffer::setPixel(int x, int y, unsigned char r, unsigned char g, unsig
 };
 
 
-unsigned char * Framebuffer::getFramebuffer() {
+unsigned char * Framebuffer::getFramebuffer() { // Returns the current Framebuffer pointer
     return this->framebuffer;
 };
 
-void Framebuffer::destroyFramebuffer() {
+void Framebuffer::destroyFramebuffer() { // Destroys it. Waits until loop is finished and frees the framebuffer safely.
 
     while(this->isBeingAccessed) {}
     this->canBeUsed = false;
@@ -52,15 +59,15 @@ void Framebuffer::destroyFramebuffer() {
     free(this->framebuffer);
 };
 
-int Framebuffer::getSizeX() {
+int Framebuffer::getSizeX() { // X Dimension Size
     return this->sizeX;
 };
 
-int Framebuffer::getSizeY() {
+int Framebuffer::getSizeY() { // Y Dimension Size
     return this->sizeY;
 };
 
-unsigned char * Framebuffer::copyFramebuffer() {
+unsigned char * Framebuffer::copyFramebuffer() { // Creates a simple copy of the current framebuffer.
     unsigned char * array;
     array = (unsigned char *) malloc(this->sizeX * this->sizeY * 4);
 
@@ -74,13 +81,13 @@ unsigned char * Framebuffer::copyFramebuffer() {
 void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int foreignY, int foreignWidth, int foreignHeight, int localX, int localY) {    
     int boundsX, boundsY;
 
-    
-
     if(foreignX < 0 || foreignY < 0)
         return;
     if(foreignWidth < 0 || foreignHeight < 0)
         return;
 
+
+    // This is the maximum the for-loop is allowed to go to. It just gives back the minimum value that is the safest for copying over the data.
     boundsX = minInt(minInt(foreignWidth,  foreignFb.getSizeX()), this->sizeX);
     boundsY = minInt(minInt(foreignHeight, foreignFb.getSizeY()), this->sizeY);
 
@@ -93,20 +100,20 @@ void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int 
         
         for(int x = foreignX; x < boundsX; x++) {
             
-            int location = x*4 + y * foreignFb.getSizeX() * 4;
-            
-
+            int location = x*4 + y * foreignFb.getSizeX() * 4; // calculate the x/y to memory-location
 
             b = *(foreignFramebuffer + location);
             g = *(foreignFramebuffer + location+1);
             r = *(foreignFramebuffer + location+2);
 
-            this->setPixel(localX+x, localY+y, r,g,b);
+            this->setPixel(localX+x, localY+y, r,g,b); // just set the new values
 
         }
     }
 
     /*
+    Forget about this:
+
     for(int y = foreignY; y < boundsY; y++) {
         int locationForeign = foreignX *4 + y * foreignFb.getSizeX() * 4;
         memcpy(this->getFramebuffer()+(localX * 4 + (localY+y) * 4 * this->getSizeX()), foreignFb.getFramebuffer()+(locationForeign), boundsX*4);

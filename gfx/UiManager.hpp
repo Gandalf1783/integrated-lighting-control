@@ -40,19 +40,23 @@ class UiManager {
     std::vector<UiObject*> uiArray;
     bool shouldStop;
     bool displayFPS;
-
     UiManager();
-    void stop();
-    void renderDisplays();
-    void addDisplay(Display* d);
     void startThread();
-    void stopThread();
+    
+    void addDisplay(Display* d);
+    void renderDisplays();
+    
     void addUiObject(UiObject* o);
+    
+    void closeWindow(Window* window);
+
     void setMouse(Mouse* m);
     void mouseMoveEvent(int x, int y);
     void mouseOnDownEvent(int x, int y);
     void mouseOnReleaseEvent(int x, int y);
     void mouseOnRightClickEvent(int x, int y);
-    void closeWindow(Window* window);
+
+    void stopThread();
+    void stop();
 };
 #endif

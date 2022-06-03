@@ -1,4 +1,6 @@
 *.o
 *.log
 *.out
+*.txt
 build/
+.vscode/

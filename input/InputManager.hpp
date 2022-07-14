@@ -12,22 +12,32 @@
 #ifndef INPUT_MANAGER_HPP
 #define INPUT_MANAGER_HPP
 
+#include "../gfx/UiManager.hpp"
+
+class UiManager;
+
 class InputManager {
     private:
-        bool mouseLeft, mouseRight;
-        int mouseScroll;
         char inputFd;
         std::thread inputManagerThread;
         bool shouldStop;
-        Mouse* m;
-        bool previousLeftClick;
+        bool left, middle, right; // Buttons (= 1 when clicked)
+        int x, y, mouseScroll;
+        signed char dX, dY; // Delta X/Y (offset to last mouse input)
+        UiManager* uiM;
     public:
         InputManager();
         void startThread();
         void stopThread();
         void inputThread();
         void registerEventHandler();
-        void setMouse(Mouse* m);
+        void resetDelta();
+        signed char getDX();
+        signed char getDY();
+        int getX();
+        int getY();
+        bool getLeft();
+        void setUiM(UiManager* uiM);
 };
 
 #endif

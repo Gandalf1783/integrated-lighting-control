@@ -16,8 +16,6 @@ using std::string;
   # This is the Display class. It openes a framebuffer and provides the render/write Methods to other UiObjects.
   ########
  */
-
-
 extern Log* logger;
 
 void Display::beginDisplay() {
@@ -116,7 +114,6 @@ void Display::testRender() {
       *(fbp + location + 1) = 15+(x-100)/2;     // A little green
       *(fbp + location + 2) = 200-(y-100)/5;    // A lot of red
       *(fbp + location + 3) = 0;      // No transparency
-
     }
   }
 };
@@ -127,6 +124,5 @@ void Display::stopDisplay() {
   free(imageBuffer);
   close(fbfd);
 };
-
 
 //TODO: FREE MEMORY!

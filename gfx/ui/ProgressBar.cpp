@@ -46,7 +46,7 @@ void ProgressBar::setDimensions(int width, int height) {
 };
 
 
-void ProgressBar::mouseMoveEvent(int x, int y) {
+void ProgressBar::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -54,6 +54,6 @@ void ProgressBar::freeMemory() {
 
 };
 
-void ProgressBar::mouseReleasedEvent(int x, int y) {
+void ProgressBar::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 }

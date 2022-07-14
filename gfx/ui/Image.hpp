@@ -3,12 +3,14 @@
 #include "UiObject.hpp"
 #include "../Framebuffer.hpp"
 
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_STATIC
-#include "stb_image.h"
+
 
 #ifndef IMAGE_H
 #define IMAGE_H
+
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_STATIC
+#include "stb_image.h"
 
 using std::string;
 
@@ -20,12 +22,12 @@ class Image : public UiObject {
   public:
     Image();
     void loadImage(char * path);
-    void mouseMoveEvent(int x, int y);
+    void mouseMoveEvent(MouseOnMoveEvent event);
     void render(Framebuffer fb);
     void setPos(int x, int y);
     void freeMemory();
     void mouseReleasedEvent();
-    void mouseReleasedEvent(int x, int y);
+    void mouseReleasedEvent(MouseOnReleaseEvent event);
 };
 
 #endif

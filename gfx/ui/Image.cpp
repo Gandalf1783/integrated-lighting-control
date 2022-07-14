@@ -68,7 +68,7 @@ void Image::setPos(int x, int y)
   this->y = y;
 };
 
-void Image::mouseMoveEvent(int x, int y) {
+void Image::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -77,6 +77,6 @@ void Image::freeMemory() {
   stbi_image_free(this->img);
 };
 
-void Image::mouseReleasedEvent(int x, int y) {
+void Image::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 }

@@ -15,8 +15,8 @@ class Rectangle : public UiObject {
         void setPos(int x, int y);
         void setDimensions(int width, int height);
         void setColor(char r, char g, char b);
-        void mouseMoveEvent(int x, int y);
-        void mouseReleasedEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
         void freeMemory();
 };
 

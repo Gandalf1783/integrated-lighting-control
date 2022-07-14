@@ -31,10 +31,10 @@ UiManager::UiManager() {
 void UiManager::addDisplay(Display * d) {
   displayArray.push_back(d);
 
-  //Window* w = new Window("Test!");
-  Window * w2 = new Window("Systemeinstellungen!");
+  Window* w = new Window("Test!");
+  //Window * w2 = new Window("Systemeinstellungen!");
 
-  uiArray.push_back(w2);
+  uiArray.push_back(w);
   //uiArray.push_back(w);
 }
 
@@ -60,46 +60,32 @@ void UiManager::renderDisplays() {
     std::chrono::duration < double, std::milli > sleep_time = timeB - timeA;
     // FPS LOOP END
     // (ca. 60 FPS)
-    int mouseX, mouseY;
-    mouseX = this -> m -> getDX();
-    mouseY = this -> m -> getDY();
-    this -> mouseMoveEvent(mouseX, mouseY);
-    if (this -> m -> getMouseLeftDown()) {
-      this -> mouseOnDownEvent(this -> m -> getX(), this -> m -> getY());
-    }
-    if (this -> m -> getMouseReleased() == true) {
-      this -> mouseOnReleaseEvent(this -> m -> getX(), this -> m -> getY());
-    }
 
     // RENDER CODE:
     for (Display * d: displayArray) {
-      char * framebuffer = d -> getFrameBuffer();
+      char * framebuffer = d -> getFrameBuffer(); //Get Display FB
       int lineLength = d -> getLineLength();
-      Framebuffer fb;
-      fb.createFramebuffer(d -> getScreenInfo().xres, d -> getScreenInfo().yres);
 
-      // printf("uiArray: %x\n", uiArray);
-      // printf("&uiArray: %x\n", &uiArray);
+      Framebuffer fb;
+      
+      fb.createFramebuffer(d -> getScreenInfo().xres, d -> getScreenInfo().yres); // Create a new FB.
 
       for (UiObject * pObject: uiArray) {
-        // printf("[RENDER] (%x) Rendering Object...", pObject);
-        pObject -> render(fb);
-
+        pObject -> render(fb); // Render all Elements which are in the pObject Array!
       }
 
-      this -> m -> render(fb);
+      this -> m -> render(fb); // Render the Mouse
+      
+      unsigned char * fbCopy = fb.copyFramebuffer(); // Create a copy of the Framebuffer
 
-      unsigned char * fbCopy = fb.copyFramebuffer();
+      memcpy(framebuffer, fbCopy, (d -> getScreenInfo().xres * d -> getScreenInfo().yres * 4)); // Copy the contents into the Display Framebuffer
 
-      memcpy(d -> getFrameBuffer(), fbCopy, (d -> getScreenInfo().xres * d -> getScreenInfo().yres * 4));
-
-      d -> renderDisplay();
-
-      free(fbCopy);
-      fb.destroyFramebuffer();
+      d -> renderDisplay(); // Copy the contents of the Display FB onto the actual Linux Framebuffer
+      free(fbCopy); // Destroy the copy
+      fb.destroyFramebuffer(); // Destroy the temp copy
     }
 
-    // printf("[RENDER] Loop-Time: %f \n", (work_time + sleep_time).count());
+    //printf("[RENDER] Loop-Time: %f \n", (work_time + sleep_time).count());
   }
 };
 
@@ -129,29 +115,79 @@ void UiManager::closeWindow(Window * window) {
   ################
 */
 
+void UiManager::mouseInput() {
+    int mouseX = 0, mouseY = 0;
+    signed char mouseDX = 0, mouseDY = 0;
+    bool left = false, middle = false, right = false;
+
+    mouseX = this->im->getX();
+    mouseY = this->im->getY();
+ 
+    mouseDX = this->im->getDX();
+    mouseDY = - this->im->getDY();
+
+    left = this->im->getLeft();
+
+    this->m->setPos(mouseX, mouseY);
+
+    if((mouseDX != 0 || mouseDY != 0)) {
+      printf("dX: %u dY: %u\n", mouseDX, mouseDY);
+      MouseOnMoveEvent event;
+      event.dX = mouseDX;
+      event.dY = mouseDY;
+      event.x = mouseX;
+      event.y = mouseY;
+      event.left = left;
+      this -> mouseMoveEvent(event);
+    }
+
+    if (left) {
+      printf("OnDown!\n");
+      MouseOnDownEvent event;
+      event.dX = mouseDX;
+      event.dY = mouseDY;
+      event.x = mouseX;
+      event.y = mouseY;
+      event.left = left;
+      this -> mouseOnDownEvent(event);
+    }
+
+    // if (this -> m -> getMouseReleased() == true) {
+    //   MouseOnReleaseEvent event;
+    //   event.dX = mouseDX;
+    //   event.dY = mouseDY;
+    //   event.x = mouseX;
+    //   event.y = mouseY;
+    //   event.left = left;
+    //   this -> mouseOnReleaseEvent(event);
+    // }
+}
+
+void UiManager::setInputManager(InputManager* im) {
+  this->im = im;  
+}
+
 void UiManager::setMouse(Mouse * m) {
   this -> m = m;
 }
 
-void UiManager::mouseMoveEvent(int x, int y) {
+void UiManager::mouseMoveEvent(MouseOnMoveEvent event) {
   for (UiObject * o: uiArray) {
-    o -> mouseMoveEvent(x, y);
+    o -> mouseMoveEvent(event);
   }
 };
 
-void UiManager::mouseOnDownEvent(int x, int y) {
+void UiManager::mouseOnDownEvent(MouseOnDownEvent event) {
   for (UiObject * o: uiArray) {
-    o -> mouseDownEvent();
+    o -> mouseDownEvent(event);
   }
 };
 
-void UiManager::mouseOnReleaseEvent(int x, int y) {
+void UiManager::mouseOnReleaseEvent(MouseOnReleaseEvent event) {
   for (UiObject * o: uiArray) {
-    o -> mouseReleasedEvent(x, y);
+    o -> mouseReleasedEvent(event);
   }
 };
-
-void UiManager::mouseOnRightClickEvent(int x, int y) {};
 
 /*
   ##################

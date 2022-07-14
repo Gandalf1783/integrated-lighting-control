@@ -11,7 +11,7 @@ Requirements: g++
 ----------
 ## Roadmap
 
-1. Graphics and Window-Support
+1. Graphics and Window-Support (WIP)
 2. Artnet (In/Out)
 3. Sessions between devices
 4. Effects-Engine

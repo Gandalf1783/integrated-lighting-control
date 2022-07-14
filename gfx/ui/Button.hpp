@@ -13,9 +13,9 @@ class Button: public UiObject {
     public:
         Button();
         void render(Framebuffer fb);
-        void mouseMoveEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
         void freeMemory();
-        void mouseReleasedEvent(int x, int y);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
 };
 
 

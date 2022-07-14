@@ -24,15 +24,15 @@ class Window : public UiObject {
         
         Framebuffer windowFb;
         bool stop;
-        bool isMouseDown;
+        bool isDragging;
     public:
         Window(std::string title);
         void render(Framebuffer fb);
         void setPos(int x, int y);
         void addUiObject(UiObject* object);
-        void mouseMoveEvent(int x, int y);
-        void mouseReleasedEvent(int x, int y);
-        void mouseDownEvent();
+        void mouseMoveEvent(MouseOnMoveEvent event);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
+        void mouseDownEvent(MouseOnDownEvent event);
         void freeMemory();
 };
 

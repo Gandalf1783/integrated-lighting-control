@@ -16,8 +16,8 @@ class ProgressBar : public UiObject {
         void render(Framebuffer fb); // Rendermethode
         void setPos(int x, int y); // Position setzen
         void setDimensions(int width, int height);
-        void mouseMoveEvent(int x, int y);
-        void mouseReleasedEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
         void freeMemory();
 };
 

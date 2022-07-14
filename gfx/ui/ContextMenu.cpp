@@ -12,7 +12,7 @@ void ContextMenu::render(Framebuffer fb) {
     }
 };
 
-void ContextMenu::mouseMoveEvent(int x, int y) {
+void ContextMenu::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -21,6 +21,6 @@ void ContextMenu::freeMemory() {
 
 };
 
-void ContextMenu::mouseReleasedEvent(int x, int y) {
+void ContextMenu::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 }

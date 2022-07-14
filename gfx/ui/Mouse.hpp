@@ -9,24 +9,22 @@ class Mouse : public UiObject {
         int x,y;
         bool left, right, middle;
         bool wasMouseReleased;
-        int dX, dY;
+        int lastX, lastY;
     public:
         Mouse();
         void render(Framebuffer fb);
         void setPos(int x, int y);
-        void setDelta(int dX, int dY);
         int getX();
         int getY();
-        int getDX();
-        int getDY();
-        void mouseMoveEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
         void freeMemory();
         void mouseRelease();
-        void mouseReleasedEvent(int x, int y);
-        void mouseDownEvent();
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
+        void mouseDownEvent(MouseOnDownEvent event);
         bool getMouseReleased();
         bool getMouseLeftDown();
         void setMouseButtons(bool left, bool right, bool middle);
+        bool evaluateIfChanged();
 
 };
 

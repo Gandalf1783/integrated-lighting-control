@@ -20,7 +20,11 @@
 
 InputManager::InputManager() {
     this->shouldStop = false;
-    this->previousLeftClick = false;
+    this->x = 1024/2;
+    this->y = 768/2;
+    this->left = false;
+    this->right = false;
+    this->middle = false;
 };
 
 void InputManager::inputThread() {
@@ -35,8 +39,10 @@ void InputManager::inputThread() {
         exit (-10);
     }
 
-    int left, middle, right; // Buttons (= 1 when clicked)
-    signed char x, y; // Delta X/Y (offset to last mouse input)
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_CYAN "INPUT" ANSI_COLOR_RESET "] ");
+    printf("/dev/input/mouse0 has been opened!\n");
+
+ 
     int bytes; // Number of bytes
     char byte[3]; // Datastream (no longer than 3 bytes)
 
@@ -44,6 +50,7 @@ void InputManager::inputThread() {
     pollfd pfd[1];
     pfd[0].fd = inputFd;
     pfd[0].events = POLLIN;
+
     while(!this->shouldStop)
     {
         // Read Mouse     
@@ -55,20 +62,20 @@ void InputManager::inputThread() {
             if(bytes > 0)
             { // Now just pass them around into their variables
                 left = byte[0] & 0x1;
-                right = byte[0] & 0x2;
-                middle = byte[0] & 0x4;
+                right = (byte[0] & 0x2);
+                middle = (byte[0] & 0x4);
 
-                x = byte[1];
-                y = byte[2];
-            // printf("x=%d, y=%d, left=%d, middle=%d, right=%d\n", x, y, left, middle, right);
-                this->m->setDelta(x,y); // Move the mouse X/Y globally
-                this->m->setMouseButtons(left, right, middle); // The current State of the buttons
+                dX = byte[1];
+                dY = byte[2];
 
-                if(this->previousLeftClick == true && left == false) { // If it was pressed before, and now it isnt, call mouseRelease event
-                    this->m->mouseRelease();
-                }
+                x += dX;
+                y -= dY;
 
-                this->previousLeftClick = left; // set the previous variable
+                this->uiM->mouseInput();
+                //printf("dx=%d, dy=%d, left=%d, middle=%d, right=%d\n", dX, dY, left, middle, right);
+                
+                dX = 0;
+                dY = 0;
             } 
         }
     }
@@ -93,6 +100,29 @@ void InputManager::stopThread() { // Just stops the input manager.
     printf("Done.\n");
 };
 
-void InputManager::setMouse(Mouse* m) {
-    this->m = m; // Set the global Mouse reference.
+void InputManager::resetDelta() {
+    this->dX = 0;
+    this->dY = 0;
+}
+
+signed char InputManager::getDX() {
+    return this->dX;
+}
+signed char InputManager::getDY() {
+    return this->dY;
+}
+
+int InputManager::getX() {
+    return this->x;
+}
+int InputManager::getY() {
+    return this->y;
+}
+bool InputManager::getLeft() {
+    return this->left;
+}
+
+
+void InputManager::setUiM(UiManager* uiM) {
+    this->uiM = uiM;
 }

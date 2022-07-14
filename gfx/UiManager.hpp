@@ -14,6 +14,7 @@
 #include "ui/Line.hpp"
 #include "ui/Mouse.hpp"
 #include "Framebuffer.hpp"
+
 #include <chrono>
 #include <thread>
 
@@ -21,9 +22,13 @@
 #ifndef UIMANAGER_HPP
 #define UIMANAGER_HPP
 
+#include "../input/InputManager.hpp"
+
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
+
+class InputManager;
 
 class UiManager {
   private:
@@ -32,9 +37,9 @@ class UiManager {
     std::chrono::system_clock::time_point timeA;
     std::chrono::system_clock::time_point timeB;
     std::chrono::duration<double, std::milli> work_time;
-    Mouse * m;
-    UiObject * selectedUiObject;
-    
+    Mouse *m;
+    UiObject *selectedUiObject;
+    InputManager  *im;
   public:
     std::vector<Display*> displayArray;
     std::vector<UiObject*> uiArray;
@@ -50,11 +55,14 @@ class UiManager {
     
     void closeWindow(Window* window);
 
+    void setInputManager(InputManager* im);
+
     void setMouse(Mouse* m);
-    void mouseMoveEvent(int x, int y);
-    void mouseOnDownEvent(int x, int y);
-    void mouseOnReleaseEvent(int x, int y);
-    void mouseOnRightClickEvent(int x, int y);
+
+    void mouseInput();
+    void mouseMoveEvent(MouseOnMoveEvent event);
+    void mouseOnDownEvent(MouseOnDownEvent event);
+    void mouseOnReleaseEvent(MouseOnReleaseEvent event);
 
     void stopThread();
     void stop();

@@ -2,8 +2,10 @@
 
 
 Mouse::Mouse() {
-    this->x = 1024/2;
-    this->y = 768/2;
+    this->lastX = 0;
+    this->lastY = 0;
+    this->x = 0;
+    this->y = 0;
     this->wasMouseReleased = false;
     this->setMouseButtons(false, false, false);
 };
@@ -19,16 +21,15 @@ void Mouse::render(Framebuffer fb) {
 };
 
 void Mouse::setPos(int x, int y) {
+    this->lastX = this->x;
+    this->lastY = this->y;
     this->x = x;
     this->y = y;
+
+    //printf("X: %d Y: %d\n", this->x, this->y);
 };
 
-void Mouse::setDelta(int dX, int dY) {
-    this->x = this->x+dX;
-    this->y = this->y-dY;
-}
-
-void Mouse::mouseMoveEvent(int x, int y) {
+void Mouse::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -40,25 +41,21 @@ int Mouse::getY() {
     return this->y;
 };
 
-int Mouse::getDX() {
-    return this->x;
-};
-
-int Mouse::getDY() {
-    return this->y;
-};
-
 void Mouse::freeMemory() {
 
 };
 
-void Mouse::mouseReleasedEvent(int x, int y) {
+void Mouse::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 };
 
-void Mouse::mouseDownEvent() {
+void Mouse::mouseDownEvent(MouseOnDownEvent event) {
 
 };
+
+bool Mouse::evaluateIfChanged() {
+    return (lastX-x != 0) || (lastY-y != 0);
+}
 
 void Mouse::mouseRelease() {
     this->wasMouseReleased = true;

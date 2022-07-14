@@ -10,9 +10,9 @@ class ContextMenu : public UiObject {
     public:
         ContextMenu();
         void render(Framebuffer fb);
-        void mouseMoveEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
         void freeMemory();
-        void mouseReleasedEvent(int x, int y);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
 };
 
 

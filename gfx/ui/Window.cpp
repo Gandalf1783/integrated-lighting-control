@@ -7,7 +7,7 @@ Window::Window(std::string title) {
     height = 600;
 
     windowFb.createFramebuffer(width, height-titleHeight);
-
+    
     this->title = new Text();
     this->title->setText(title);
     this->title->setColor(0xFF, 0xFF, 0xFF);
@@ -19,7 +19,7 @@ Window::Window(std::string title) {
     
     this->uiObjects.push_back(t);
     this->stop = false;
-    this->isMouseDown = false;
+    this->isDragging = false;
 };
 
 
@@ -36,19 +36,17 @@ void Window::render(Framebuffer fb) {
     this->title->setPos(x+(width/2)-(this->title->getCharCount()*8/2),y+(titleHeight/2)-7); // Center the Text
     this->title->render(fb);
 
-
     for(int i = 0; i < width; i++) {
         for(int j = 0; j < height; j++) {
-            windowFb.setPixel(i,j,(0xFF-i),0xA0,0xA0);
+            windowFb.setPixel(i,j,0x4A, 0x4A, 0x4A);
         }
-    }
-  
+    } 
+
     for(UiObject* uiObject : uiObjects) {
         uiObject->render(this->windowFb);
     }
 
-    fb.integrateFramebuffer(this->windowFb, 0,0,this->width, this->height-this->titleHeight, this->x, this->y+titleHeight);
-
+    fb.integrateFramebuffer(this->windowFb, 0,0,this->width, this->height - this->titleHeight, this->x, this->y+titleHeight);
 };
 
 void Window::setPos(int x, int y) {
@@ -66,35 +64,38 @@ void Window::addUiObject(UiObject* object) {
 
 };
 
-void Window::mouseMoveEvent(int x, int y) {
+void Window::mouseMoveEvent(MouseOnMoveEvent event) {
     if(this->stop) 
             return;
-            
-    if(this->isMouseDown) {
+    
+    int x,y;
+    x = event.x;
+    y = event.y;
+    if(isDragging && event.left) {
+        this->setPos(this->x+event.dX,this->y+event.dY);
+        return;
+    }
+    //printf("%u, %u \n",x,y);
+    if(event.left) {
         //printf("SETTING PIXELS\n");
-        this->setPos(x,y);
-        /*
+        
+
         // If cursor is inside titleBar:
         if(x >= this->x && x < this->x+this->width) {
             // Then Drag the window around
 
             if(y >= this->y && y < this->y+this->titleHeight) {
-
+                isDragging = true;
+                this->setPos(this->x+event.dX,this->y+event.dY);
             }
         }
-        */
-        
     }
 };
 
-void Window::mouseReleasedEvent(int x, int y) {
-    //this->stop = true;
-    this->isMouseDown = false;
+void Window::mouseReleasedEvent(MouseOnReleaseEvent event) {
 }
 
-void Window::mouseDownEvent() {
-    //printf("MOUSE DOWN\n");
-    this->isMouseDown = true;
+void Window::mouseDownEvent(MouseOnDownEvent event) {
 }
 
 void Window::freeMemory() {

@@ -2,28 +2,28 @@
 
 /*
     This class is a Framebuffer and is used to store Video Data in a 2d array.
-
     It just manages some simple functions like setting a pixel and creating/destroying it.
 */
-
 
 int minInt(int a, int b) {
     return ( a < b ? a : b);
 };
 
 void Framebuffer::createFramebuffer(int sizeX, int sizeY) {
-
     this->sizeX = sizeX;
     this->sizeY = sizeY;
 
     this->framebuffer = (unsigned char *) malloc(sizeX * sizeY * 4); // Assume Format: BGRA (4 channels á 1 Byte)
     
+    memset(this->framebuffer, 0, (sizeX * sizeY * 4));
+
     this->canBeUsed = true;
+    this->isBeingAccessed = false;
 };
 
 
 void Framebuffer::setPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b) { // Sets a pixel after checking for certain error-conditions, especially out of bounds.
-    
+
     if(x >= this->sizeX || x < 0)
         return;
     if(y >= this->sizeY || y < 0)
@@ -31,7 +31,6 @@ void Framebuffer::setPixel(int x, int y, unsigned char r, unsigned char g, unsig
 
     if(!this->canBeUsed)
         return;
-
     this->isBeingAccessed = true;
     
     int location =  x * 4 + 
@@ -51,11 +50,9 @@ unsigned char * Framebuffer::getFramebuffer() { // Returns the current Framebuff
 };
 
 void Framebuffer::destroyFramebuffer() { // Destroys it. Waits until loop is finished and frees the framebuffer safely.
-
     while(this->isBeingAccessed) {}
     this->canBeUsed = false;
     while(this->isBeingAccessed) {}
-    
     free(this->framebuffer);
 };
 
@@ -78,7 +75,7 @@ unsigned char * Framebuffer::copyFramebuffer() { // Creates a simple copy of the
 /*
     Copies the content of the foreign Framebuffer into the local one. Specify from where to where!
 */
-void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int foreignY, int foreignWidth, int foreignHeight, int localX, int localY) {    
+void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int foreignY, int foreignWidth, int foreignHeight, int localX, int localY) {
     int boundsX, boundsY;
 
     if(foreignX < 0 || foreignY < 0)
@@ -110,7 +107,6 @@ void Framebuffer::integrateFramebuffer(Framebuffer foreignFb, int foreignX, int 
 
         }
     }
-
     /*
     Forget about this:
 

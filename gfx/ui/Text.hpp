@@ -9,6 +9,11 @@
 #ifndef TEXT_HPP
 #define TEXT_HPP
 
+#define STB_TRUETYPE_IMPLEMENTATION
+#define STBTT_STATIC
+#include "stb_truetype.hpp"
+
+
 class Text : public UiObject {
 
     private:
@@ -25,9 +30,9 @@ class Text : public UiObject {
         void setText(std::string text);
         void setPos(int x, int y);
         int getCharCount();
-        void mouseMoveEvent(int x, int y);
-        void mouseReleasedEvent(int x, int y);
-        void mouseDownEvent();
+        void mouseMoveEvent(MouseOnMoveEvent event);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
+        void mouseDownEvent(MouseOnDownEvent event);
         void freeMemory();
         
 };

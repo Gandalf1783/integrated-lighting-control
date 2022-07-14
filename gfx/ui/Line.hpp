@@ -14,10 +14,10 @@ class Line : public UiObject {
         void setFrom(int x, int y);
         void setTo(int x, int y);
         void render(Framebuffer fb);
-        void mouseMoveEvent(int x, int y);
+        void mouseMoveEvent(MouseOnMoveEvent event);
         void freeMemory();
         void mouseReleasedEvent();
-        void mouseReleasedEvent(int x, int y);
+        void mouseReleasedEvent(MouseOnReleaseEvent event);
 };
 
 #endif

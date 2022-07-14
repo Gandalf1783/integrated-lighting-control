@@ -6,7 +6,7 @@ Text::Text() {
 };
 
 Text::Text(std::string s) {
-
+    this->setText(s);
 };
 
 Text::Text(char* s) {
@@ -52,7 +52,7 @@ void Text::setPos(int x, int y) {
     this->y = y;
 };
 
-void Text::mouseMoveEvent(int x, int y) {
+void Text::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -60,10 +60,10 @@ void Text::freeMemory() {
 
 };
 
-void Text::mouseReleasedEvent(int x, int y) {
+void Text::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 }
 
-void Text::mouseDownEvent() {
+void Text::mouseDownEvent(MouseOnDownEvent event) {
     
 }

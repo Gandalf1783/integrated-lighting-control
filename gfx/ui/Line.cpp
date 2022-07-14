@@ -25,7 +25,6 @@ void Line::setTo(int x, int y) {
 void Line::render(Framebuffer fb) {
     int x,y;
     this->y2++;
-    //printf("m: %u\n", m);
     if((y2-y1) >= 0) {
         for(int y = y1; y < y2-y1; y++) {
             x = y/m;
@@ -39,7 +38,7 @@ void Line::render(Framebuffer fb) {
     }
 };
 
-void Line::mouseMoveEvent(int x, int y) {
+void Line::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -47,6 +46,6 @@ void Line::freeMemory() {
 
 };
 
-void Line::mouseReleasedEvent(int x, int y) {
+void Line::mouseReleasedEvent(MouseOnReleaseEvent event) {
 
 }

@@ -13,7 +13,7 @@ void Button::render(Framebuffer fb) {
     }
 };
 
-void Button::mouseMoveEvent(int x, int y) {
+void Button::mouseMoveEvent(MouseOnMoveEvent event) {
 
 };
 
@@ -21,6 +21,6 @@ void Button::freeMemory() {
 
 };
 
-void Button::mouseReleasedEvent(int x, int y) {
+void Button::mouseReleasedEvent(MouseOnReleaseEvent event) {
     printf("BUTTON WAS CLICKED!\n");
 }

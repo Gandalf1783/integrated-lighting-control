@@ -28,16 +28,18 @@ int main()
 
   //std::vector<Display> displays;
 
-  serial->start();
-  
+  //serial->start();
+  im->startThread();
+  im->setUiM(uiManager);
+
   uiManager->setMouse(m);
+  uiManager->setInputManager(im);
   uiManager->addDisplay(d);
   uiManager->startThread();
-  im->setMouse(m);
-  im->startThread();
+
   printf("[MAIN] FREERUN >>ACTIVE<<\n");
 
-  sleep_for(25s);
+  sleep_for(60s);
 
   printf("[MAIN] STOPPING\n");
   
@@ -46,7 +48,7 @@ int main()
   
   im->stopThread();
   
-  serial->stop();
+  //serial->stop();
 
 
   printf("[MAIN] Deleting last references...\n");

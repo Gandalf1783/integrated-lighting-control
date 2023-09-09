@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../lib/libfixture.a CMakeFiles/fixture.dir/Fixture.cpp.o
+/usr/bin/ranlib ../lib/libfixture.a

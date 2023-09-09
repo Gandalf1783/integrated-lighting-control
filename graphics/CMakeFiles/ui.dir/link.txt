@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../lib/libui.a CMakeFiles/ui.dir/UI.cpp.o CMakeFiles/ui.dir/Display.cpp.o
+/usr/bin/ranlib ../lib/libui.a

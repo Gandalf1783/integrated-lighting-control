@@ -45,7 +45,7 @@ void DMXEngine::runOutput() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Thread is " ANSI_COLOR_GREEN "running" ANSI_COLOR_RESET ".\n");
     this->shouldThreadStop = false;
     
-    FrameLimit<30> frameLimiter;
+    FrameLimit<42> frameLimiter;
     while(!this->shouldThreadStop) {
         //printf("[DMXENGINE] Shall not stop.\n");
         
@@ -64,11 +64,9 @@ void DMXEngine::runOutput() {
                 output->sendUniverse(currentUniverse, sequenceNum);
             }
         }
-
-        //std::this_thread::sleep_for(22727272ns);
     
         sequenceNum++;
-        frameLimiter.sleep(); // Should limit to 30 dmx frames per sec
+        frameLimiter.sleep(); // Should limit to 42 dmx frames per sec
     }
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Output-Thread has stopped.\n");
 };

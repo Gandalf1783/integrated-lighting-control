@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../lib/libconfig.a CMakeFiles/config.dir/Config.cpp.o
+/usr/bin/ranlib ../lib/libconfig.a

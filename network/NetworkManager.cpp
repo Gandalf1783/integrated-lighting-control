@@ -29,7 +29,7 @@ static void set_if_down(char *ifname)
     printf("[" ANSI_COLOR_GREEN "NetworkManager" ANSI_COLOR_RESET"] : Link " ANSI_COLOR_RED "down" ANSI_COLOR_RESET " on interface %s\n", ifname);
 }
 
-static void set_if_up(char *ifname)
+static void set_if_up(const char *ifname)
 {
     int sockfd;
     struct ifreq ifr;
@@ -110,13 +110,15 @@ int NetworkManager::set_interface_address(const char* interface, const char* add
 
 NetworkManager::NetworkManager() {
     printf("[" ANSI_COLOR_GREEN "NetworkManager" ANSI_COLOR_RESET"] : Setting up links...\n");
+    std::string ifaceNameStr = currentConfig.get<std::string>("network.ifaceName");
     std::string eth0AddrStr = currentConfig.get<std::string>("network.eth0Addr");
     std::string eth0MaskStr = currentConfig.get<std::string>("network.eth0Mask");
+    const char * ifaceName = ifaceNameStr.c_str();
     const char * eth0Addr = eth0AddrStr.c_str();
     const char * eth0Mask = eth0MaskStr.c_str();
-    set_interface_address("eth0", eth0Addr, eth0Mask);
+    set_interface_address(ifaceName, eth0Addr, eth0Mask);
 
-    set_if_up("eth0");
+    set_if_up(ifaceName);
     
     printf("[" ANSI_COLOR_GREEN "NetworkManager" ANSI_COLOR_RESET"] : Init done.\n");
 };

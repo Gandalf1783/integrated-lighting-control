@@ -14,6 +14,9 @@
 #include <sstream>
 #include <algorithm>
 
+#include <unistd.h>
+#include <fcntl.h>
+
 #include "Session.hpp"
 #include "Station.hpp"
 #include "../network/NetworkManager.hpp"
@@ -27,7 +30,7 @@
 
 
 
-enum SessionCommands {CREATE, JOIN, DESTROY, LEAVE, BEACON_STATION, BEACON_SESSION, DISCOVER, DISCOVER_RESPONSE, SESSION_REQUEST, SESSION_RESPONSE};
+enum SessionCommands {CREATE, JOIN, DESTROY, LEAVE, BEACON_STATION, BEACON_SESSION, DISCOVER, DISCOVER_RESPONSE, SESSION_REQUEST, SESSION_RESPONSE, STATION_PROMOTE, STATION_QUERY_VERSION, SESSION_ID_IN_USE};
 
 class SessionAPI {
 
@@ -37,6 +40,7 @@ class SessionAPI {
         void start();
         void stop();
         void broadcastStationAndState();
+        void replySessionIDInUse(struct sockaddr_in* remoteAddress, unsigned int sessionID);
         void replyStation(struct sockaddr_in* remoteAddress);
         void createSession(unsigned int sessionID, const char * sessionName);
         void discover();

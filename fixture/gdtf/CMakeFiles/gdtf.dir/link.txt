@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libgdtf.a CMakeFiles/gdtf.dir/GDTF_Fixture.cpp.o
+/usr/bin/ranlib ../../lib/libgdtf.a

@@ -8,7 +8,6 @@
 #include "config/Config.hpp"
 
 #include "logger/Log.hpp"
-#include "graphics/UI.hpp"
 
 #include "state/State.hpp"
 
@@ -46,15 +45,12 @@ void signalHandler( int signum ) {
 int main() {
     DMXEngine* engine; 
     Log* logger;
-    UI* ui;
     SessionManager *sessionManager;
     NetworkManager *networkManager;
     
     readConfig();
 
     signal(SIGTERM, signalHandler); // Handle incoming Signals
-
-    ui = new UI();
     logger = new Log();
 
     networkManager = new NetworkManager();
@@ -65,9 +61,6 @@ int main() {
     networkManager->updateIPs();
     
     sessionManager->init();
-
-    ui->init();
-    ui->start();
 
     //engine->addOutput(new ArtNet());
     engine->start();
@@ -80,7 +73,7 @@ int main() {
     while(currentState != STOPPING) {
 
         if(currentState == STOP_REQUEST) { // Internal console event (Stop-Request)
-            ui->displayStopDialog(); // Display stop dialog (should console shut down?)
+           currentState == STOPPING; // STOP PROGRAM
         }
 
         std::this_thread::sleep_for(500ms);
@@ -91,12 +84,9 @@ int main() {
     engine->stop();
     engine->freeMemory();
 
-    ui->stop();
-    ui->freeMemory();
 
     // All threads have stopped. Exit:
 
-    delete ui;
     delete sessionManager;
     delete networkManager;
     delete engine;

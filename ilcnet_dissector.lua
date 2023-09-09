@@ -27,6 +27,7 @@ function get_intent_name(intent)
     elseif intent == 6 then intent_name = "DISCOVER (Response)"
     elseif intent == 7 then intent_name = "SESSION (Request)"
     elseif intent == 8 then intent_name = "SESSION (Response)"
+    elseif intent == 12 then intent_name = "Session ID already in use (Session)"
     end
 
     return intent_name
@@ -98,6 +99,8 @@ function ilcnet_prot.dissector(buffer, pinfo, tree)
     elseif intent == 6 then 
     elseif intent == 7 then 
     elseif intent == 8 then 
+    elseif intent == 12 then
+        subtree:add("SessionID already used!", "", "ID in use!");
     else
         subtree:add_expert_info(PI_MALFORMED, PI_WARN, "INTENT is not known. IntentID that was transmitted: " .. intent) 
     end

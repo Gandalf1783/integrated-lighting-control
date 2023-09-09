@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/root/ilc/fixture/channel/Channel.cpp
+Channel.hpp
+/root/ilc/fixture/channel/Channel.hpp
+
+/root/ilc/fixture/channel/Channel.hpp
+stdio.h
+-
+stdlib.h
+-
+iostream
+-
+

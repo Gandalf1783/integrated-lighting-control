@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/ilc.dir/main.cpp.o -o bin/ilc  lib/libdmxengine.a lib/libconfig.a lib/libnetwork.a lib/liblog.a lib/libsession.a lib/libdmx_outputs.a lib/libfixture.a lib/libchannel.a -lpthread 

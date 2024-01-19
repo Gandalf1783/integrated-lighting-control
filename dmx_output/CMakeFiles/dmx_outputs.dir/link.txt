@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../lib/libdmx_outputs.a CMakeFiles/dmx_outputs.dir/Output.cpp.o CMakeFiles/dmx_outputs.dir/ArtNet.cpp.o
-/usr/bin/ranlib ../lib/libdmx_outputs.a

@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libuiObjects.a CMakeFiles/uiObjects.dir/UiObject.cpp.o CMakeFiles/uiObjects.dir/Text.cpp.o CMakeFiles/uiObjects.dir/DebugView.cpp.o CMakeFiles/uiObjects.dir/Texture.cpp.o CMakeFiles/uiObjects.dir/Grid.cpp.o CMakeFiles/uiObjects.dir/GridElement.cpp.o CMakeFiles/uiObjects.dir/Textbox.cpp.o
-/usr/bin/ranlib ../../lib/libuiObjects.a

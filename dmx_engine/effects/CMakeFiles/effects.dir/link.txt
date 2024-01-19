@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libeffects.a CMakeFiles/effects.dir/Waveform.cpp.o CMakeFiles/effects.dir/Effect.cpp.o
-/usr/bin/ranlib ../../lib/libeffects.a

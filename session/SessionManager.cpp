@@ -1,13 +1,13 @@
 #include "SessionManager.hpp"
 
-SessionManager::SessionManager(NetworkManager *networkManager) {
-    this->sessionAPI = new SessionAPI();
+SessionManager::SessionManager(std::shared_ptr<NetworkManager> networkManager) {
+    this->sessionAPI = std::make_unique<SessionAPI>();
     this->networkManager = networkManager;
 };
 
 SessionManager::~SessionManager() {
     this->sessionAPI->stop();
-    delete this->sessionAPI;
+    this->sessionAPI.reset();
 };
 
 void SessionManager::init() {

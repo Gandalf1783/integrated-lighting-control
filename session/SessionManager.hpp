@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <thread>
+#include <memory>
 
 #include "Session.hpp"
 #include "Station.hpp"
@@ -16,20 +17,20 @@ enum SessionState { ALONE, MASTER, CONNECTED, CREATING, DESTROYING };
 
 class SessionManager {
     public:
-        SessionManager(NetworkManager* networkManager);
+        SessionManager(std::shared_ptr<NetworkManager> networkManager);
         ~SessionManager();
         void init();
         void createSession(unsigned int sessionID, char* sessionName);
         void leaveSession();
         void destroySession(); 
     private:
-        Session* currentSession;
-        SessionState currentState;
-        SessionAPI* sessionAPI;
+        std::unique_ptr<Session> currentSession;
+        SessionState currentState; // No Pointer needed, since this is an enum
+        std::unique_ptr<SessionAPI> sessionAPI;
 
         std::thread sessionBroadcastThread;
         std::thread sessionDiscoverThread;
-        NetworkManager* networkManager;
+        std::shared_ptr<NetworkManager> networkManager;
 
 };
 

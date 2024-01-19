@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <memory>
 
 #include "../logger/Log.hpp"
 #include "../config/Config.hpp"
@@ -10,9 +11,10 @@
 
 class IPCManager {
     private: 
-        
+        std::shared_ptr<Log> logger;
+             
     public:
-        IPCManager(Log* logger);
+        IPCManager(std::shared_ptr<Log> logger);
         ~IPCManager();
 
 };

@@ -45,21 +45,22 @@ void signalHandler( int signum ) {
 }
 
 int main() {
-    unique_ptr<DMXEngine> engine; 
-    Log* logger;
-    SessionManager* sessionManager;
-    NetworkManager* networkManager;
-    IPCManager* ipcManager;
+    std::unique_ptr<DMXEngine> engine; 
+    std::shared_ptr<Log> logger;
+    std::unique_ptr<SessionManager> sessionManager;
+    std::shared_ptr<NetworkManager> networkManager;
+    std::unique_ptr<IPCManager> ipcManager;
 
     readConfig();
 
     signal(SIGTERM, signalHandler); // Handle incoming Signals
-    logger = new Log();
 
-    ipcManager = new IPCManager(logger);
+    logger = std::make_shared<Log>();
 
-    networkManager = new NetworkManager();
-    sessionManager = new SessionManager(networkManager); // Pass networkManager for IP-Addresses
+    ipcManager = std::make_unique<IPCManager>(logger);
+
+    networkManager = std::make_shared<NetworkManager>();
+    sessionManager = std::make_unique<SessionManager>(networkManager); // Pass networkManager for IP-Addresses
 
     engine = std::make_unique<DMXEngine>(); // Start the DMX-Engine
     
@@ -95,11 +96,10 @@ int main() {
 
 
     // All threads have stopped. Exit:
-
-    delete sessionManager;
-    delete networkManager;
-    delete engine;
-    delete logger;
+    sessionManager.reset();
+    networkManager.reset();
+    engine.reset();
+    logger.reset();
 
     return 0;
 };

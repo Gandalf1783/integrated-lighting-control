@@ -2,3 +2,7 @@ build
 ilc
 CMakeFiles
 *.cmake
+MakeFile
+.a
+.idea
+.vscode

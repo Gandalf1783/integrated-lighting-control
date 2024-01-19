@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <unistd.h>
+#include <memory>
 
 #include "Output.hpp"
 #include "../dmx_engine/Universe.hpp"
@@ -28,7 +29,7 @@ class ArtNet : public Output {
         char* artnetHeader;
     public:
         ArtNet();
-        void sendUniverse(Universe* u, unsigned char sequenceNum);
+        void sendUniverse(std::shared_ptr<Universe> universe, unsigned char sequenceNum);
         void stop();
         void freeMemory();
         

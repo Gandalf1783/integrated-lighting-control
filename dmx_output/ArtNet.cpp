@@ -53,7 +53,7 @@ ArtNet::ArtNet() {
 };  
 
 
-void ArtNet::sendUniverse(Universe* universe, unsigned char sequenceNum) {
+void ArtNet::sendUniverse(std::shared_ptr<Universe> universe, unsigned char sequenceNum) {
 
     char* finalArray = (char*) malloc(18 + 512); // 19 is Headersize + 512 Data
     

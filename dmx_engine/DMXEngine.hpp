@@ -4,6 +4,7 @@
 #include <vector>
 #include <math.h>
 #include <thread>
+#include <memory>
 
 #include "FrameLimit.hpp"
 
@@ -22,9 +23,9 @@ class DMXEngine {
     private:
         int universeNum;
         unsigned char sequenceNum;
-        std::vector<Universe*> universes;
-        std::vector<Output*> dmxOutputs;
-        std::vector<Effect*> runningEffects;
+        std::vector<std::shared_ptr<Universe>> universes;
+        std::vector<std::shared_ptr<Output>> dmxOutputs;
+        std::vector<std::shared_ptr<Effect>> runningEffects;
 
 
         std::thread dmxEngineInputThread;
@@ -39,7 +40,7 @@ class DMXEngine {
     public:
         DMXEngine();
         DMXEngine(unsigned short universes);
-        void addOutput(Output* output);
+        void addOutput(std::shared_ptr<Output> output);
         void setChannel(unsigned short universes, unsigned char value);
         void start();
         void stop();

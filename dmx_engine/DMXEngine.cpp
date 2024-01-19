@@ -19,8 +19,7 @@ using namespace std::chrono;
 
 DMXEngine::DMXEngine() {
     for(int i = 0; i < DEFAULT_DMX_UNIVERSES; i++) {
-        Universe* u = new Universe(i);
-        this->universes.push_back(u);
+        this->universes.push_back(std::make_shared<Universe>(i));
     }
     printf("[DMXEngine] Initiated %d universes.\n", DEFAULT_DMX_UNIVERSES);
     this->universeNum = DEFAULT_DMX_UNIVERSES;
@@ -30,8 +29,7 @@ DMXEngine::DMXEngine() {
 DMXEngine::DMXEngine(unsigned short universes) {
     universes = min(universes, MAX_DMX_UNIVERSES);
     for(int i = 0; i < universes; i++) {
-        Universe* u = new Universe(i);
-        this->universes.push_back(u);
+        this->universes.push_back(std::make_shared<Universe>(i));
     }
     printf("[DMXEngine] Initiated %d universes.\n", universes);
     this->universeNum = universes;
@@ -54,13 +52,13 @@ void DMXEngine::runOutput() {
         runEffects();
 
         for(int i = 0; i < this->universeNum; i++) {
-            Universe* currentUniverse;
+            std::shared_ptr<Universe> currentUniverse;
             currentUniverse = this->universes.at(i);
             
             unsigned char* dmxValues = (currentUniverse->getDMXValues());
             
             for(int i = 0; i < this->dmxOutputs.size(); i++) {
-                Output *output = dmxOutputs.at(i);
+                std::shared_ptr<Output> output = dmxOutputs.at(i);
                 output->sendUniverse(currentUniverse, sequenceNum);
             }
         }
@@ -107,7 +105,7 @@ void DMXEngine::runInputs() {
     // printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Input-Thread has stopped.\n");
 }
 
-void DMXEngine::addOutput(Output* output) {
+void DMXEngine::addOutput(std::shared_ptr<Output> output) {
     this->dmxOutputs.push_back(output);
 };
 
@@ -128,22 +126,17 @@ void DMXEngine::stop() {
 }
 
 void DMXEngine::freeMemory() {
-    for(Output* out : this->dmxOutputs) {
+    for(std::shared_ptr<Output> out : this->dmxOutputs) {
         out->stop();
         out->freeMemory();
-        delete out;
+        out.reset();
     }
 
-    for(Universe* uni : this->universes) {
+    for(std::shared_ptr<Universe> uni : this->universes) {
         uni->freeMemory();
-        delete uni;
+        uni.reset();
     }
-
-    // for(Effect* effect : this->effect) {
-    //    effect->freeMemory();
-    // }
 
     this->dmxOutputs.clear();
     this->universes.clear();
-    //this->effect.clear();
 }

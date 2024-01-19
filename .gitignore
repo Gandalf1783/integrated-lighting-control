@@ -6,3 +6,5 @@ MakeFile
 .a
 .idea
 .vscode
+graphics
+graphics/*

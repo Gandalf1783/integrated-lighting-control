@@ -1,4 +1,4 @@
 build
 ilc
 CMakeFiles
-.cmake
+*.cmake

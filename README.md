@@ -1,0 +1,36 @@
+# ILC
+
+ILC stands for Integrated Lightinc Control and is a system capable of generating lighting effects with its dmx engine.
+
+## How to compile:
+
+Create a folder called build/ and enter it:
+
+> /: mkdir build && cd build
+
+Invoke cmake to generate all Makefiles:
+
+> build/: cmake ..
+
+Now the build files are localed in the build/ directory.
+This means you can invoke Make to compile the project:
+
+> build/: make all
+
+The output should appear in the bin/ folder insice the build/ directory:
+
+> build/bin/: ls -la
+
+To execute from the build directory:
+
+> build/: ./bin/ilc
+
+ILC should now start. You can exit via CTRL+C (forcefully).
+To terminate it correctly, use the SIGTERM (15) signal. This assumes you know the Process ID ([PID]) through e.g. ps, top or similar.
+
+> /: kill -15 [PID]
+
+
+## LUA - Wireshark Dissector
+This repo includes a Wireshark-Dissector which parses network traffic and analyzes it.
+It adds support for the "ILCNET" protocol.

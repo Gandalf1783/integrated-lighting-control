@@ -30,6 +30,15 @@ To terminate it correctly, use the SIGTERM (15) signal. This assumes you know th
 
 > /: kill -15 [PID]
 
+## Dependencies
+
+This project relies on dependencies.
+This list contains the list of dependencies needed:
+
+1. ZeroMQ / zmqpp (ZMQ for C++)
+    When using Arch, you can install it from the AUR, e.g.:
+    > /: yay -S zmqpp-git
+2. Boost
 
 ## LUA - Wireshark Dissector
 This repo includes a Wireshark-Dissector which parses network traffic and analyzes it.

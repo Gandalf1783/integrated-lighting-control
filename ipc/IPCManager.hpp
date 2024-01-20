@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <memory>
+#include <string>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+#include <zmqpp/zmqpp.hpp>
 
 #include "../logger/Log.hpp"
 #include "../config/Config.hpp"
@@ -15,6 +21,7 @@ class IPCManager {
              
     public:
         IPCManager(std::shared_ptr<Log> logger);
+        void start();
         ~IPCManager();
 
 };

@@ -58,6 +58,7 @@ int main() {
     logger = std::make_shared<Log>();
 
     ipcManager = std::make_unique<IPCManager>(logger);
+    ipcManager->start(); // Start the IPC
 
     networkManager = std::make_shared<NetworkManager>();
     sessionManager = std::make_unique<SessionManager>(networkManager); // Pass networkManager for IP-Addresses

@@ -9,6 +9,7 @@ cmake_minimum_required(VERSION 3.13)
 project(CustomDMXEngine)
 
 find_package(Threads REQUIRED)
+find_package(ZeroMQ REQUIRED)
 
 #add_compile_options(-fsanitize=undefined,address)
 #add_link_options(-fsanitize=undefined,address)
@@ -30,6 +31,6 @@ add_subdirectory(config)
 add_subdirectory(ipc)
 
 add_executable(ilc main.cpp)
-target_link_libraries(ilc ipc dmxengine config network log session dmx_outputs fixture channel Threads::Threads)
+target_link_libraries(ilc ipc dmxengine config network log session dmx_outputs fixture channel Threads::Threads zmq zmqpp)
 
 message("### CMake has completed! ###")

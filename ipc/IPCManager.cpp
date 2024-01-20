@@ -7,6 +7,12 @@ IPCManager::IPCManager(std::shared_ptr<Log> logger) {
     std::string defaultPort = currentConfig.get<std::string>("ipc.defaultPort");
 };
 
+void IPCManager::start() {
+    const std::string endpoint = "tcp://*:5555";
+
+    zmqpp::context context;
+};
+
 IPCManager::~IPCManager() {
     printf("[IPCManager] Closing IPC...\n");
 };

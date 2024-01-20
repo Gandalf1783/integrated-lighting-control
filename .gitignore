@@ -4,7 +4,7 @@ ilc
 CMakeFiles
 CMakeCache.txt
 *.cmake
-MakeFile
+Makefile
 .a
 .idea
 .vscode

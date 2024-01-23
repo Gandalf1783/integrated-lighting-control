@@ -78,10 +78,6 @@ int main() {
     // The Engine has prepared for everything.
     // Now we can start the IPC:
 
-    //ipcManager->start();
-
-
-
     currentState = RUNNING;
     // std::this_thread::sleep_for(10000ms); // Demo Timeout
     while(currentState != STOPPING) {

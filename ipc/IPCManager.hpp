@@ -17,13 +17,16 @@
 
 class IPCManager {
     private: 
+        bool shouldThreadStop;
         std::shared_ptr<Log> logger;
-        std::unique_ptr<zmqpp::context> context;
+        std::shared_ptr<zmqpp::context> context;
         zmqpp::socket_type type; // No PTR needed, just an enum
-        std::unique_ptr<zmqpp::socket> socket;
+        std::shared_ptr<zmqpp::socket> socket;
+        std::thread zmqppThread;
     public:
         IPCManager(std::shared_ptr<Log> logger);
         void start();
+        void receiveLoop();
         ~IPCManager();
 
 };

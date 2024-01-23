@@ -19,8 +19,8 @@ int LogEvent::getErrorSource() {
 };
 
 void LogEvent::stop() {
-    if(errorDescription != nullptr) {
-        free(errorDescription);
-        this->errorDescription = nullptr;
-    }
+    // if(errorDescription != nullptr) {
+    //     free(errorDescription);
+    //     this->errorDescription = nullptr;
+    // }
 }

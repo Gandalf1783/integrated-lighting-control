@@ -1,3 +1,5 @@
+#include <string>
+
 #ifndef SESSION_HPP
 #define SESSION_HPP
 
@@ -8,7 +10,7 @@ class Session {
 
     private:
         unsigned int sessionID;
-        char* sessionName;
+        std::string sessionName;
         unsigned int deviceIDMaster;
         
 };

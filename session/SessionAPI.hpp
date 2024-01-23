@@ -47,8 +47,8 @@ class SessionAPI {
         void createSession(unsigned int sessionID, const char * sessionName);
         void discover();
 
-        std::vector<Session*> availableSessions;
-        std::vector<Station*> availableStations;
+        std::vector<std::unique_ptr<Session>> availableSessions;
+        std::vector<std::unique_ptr<Station>> availableStations;
         unsigned int sessionID;
     private:
         char header[6] = { 'I', 'L', 'C', 'N', 'E', 'T'};

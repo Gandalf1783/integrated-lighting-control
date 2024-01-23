@@ -88,6 +88,9 @@ void SessionAPI::receiveLoop()
 
         if (bytesReceived <= 0)
         {
+            if(errno == 0)
+                return;
+
             std::cerr << "Error receiving ILCNET-Message (" << bytesReceived << ") - " << strerror(errno) << " - " << errno << std::endl;
             continue;
         }
@@ -134,7 +137,7 @@ void SessionAPI::receiveLoop()
             break;
         case BEACON_STATION:
             printf("Station was found (BEACON_STATION received)!...\n");
-            this->availableStations.push_back(new Station(remoteIp));
+            this->availableStations.push_back(std::make_unique<Station>(remoteIp));
             break;
         case BEACON_SESSION:
             printf("Session was found! (ID: %d) (Length: %d)\n", buffer[7], bytesReceived);
@@ -342,6 +345,11 @@ void SessionAPI::broadcastStationAndState()
 void SessionAPI::stop()
 {
     this->shouldThreadStop = true;
+
+    shutdown(this->socketFD, SHUT_RDWR);
+
     receiveThread.join();
+    printf("[SESSIONAPI] Done.");
     close(this->socketFD);
+    
 };

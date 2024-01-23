@@ -9,7 +9,7 @@
 
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-static void set_if_down(char *ifname)
+static void set_if_down(char * ifname)
 {
     int sockfd;
     struct ifreq ifr;

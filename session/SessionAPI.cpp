@@ -29,8 +29,6 @@ void SessionAPI::init(interfaceMeta interface)
 
     this->socketFD = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    // Enable non-blocking recvfrom:
-
     if (this->socketFD < 0)
     {
         perror("[SessionAPI] Could not create UDP-Socket for SessionAPI Output!");
@@ -97,8 +95,8 @@ void SessionAPI::receiveLoop()
         printf("RECEIVED %d BYTES\n\n", bytesReceived);
 
         in_addr remoteIp = remoteAddr.sin_addr;
-
         in_addr localIP = this->currentInterface.ipAddr;
+
         printf("Packet from (%s). I am at (%s)\n", inet_ntoa(remoteIp), inet_ntoa(localIP));
 
         if (remoteIp.s_addr == localIP.s_addr)
@@ -107,6 +105,8 @@ void SessionAPI::receiveLoop()
             printf("Received my own packet (%s). Yikes!\n", inet_ntoa(remoteIp));
             continue;
         }
+
+        //TODO: Check for ILCNET-Header
 
         switch (buffer[6]) // buffer[6] is the INTENT of the ILCNET message
         {

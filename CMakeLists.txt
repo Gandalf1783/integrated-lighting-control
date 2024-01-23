@@ -11,8 +11,8 @@ project(CustomDMXEngine)
 find_package(Threads REQUIRED)
 find_package(ZeroMQ REQUIRED)
 
-#add_compile_options(-fsanitize=undefined,address)
-#add_link_options(-fsanitize=undefined,address)
+add_compile_options(-fsanitize=undefined,address)
+add_link_options(-fsanitize=undefined,address)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)

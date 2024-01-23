@@ -30,9 +30,6 @@ void SessionAPI::init(interfaceMeta interface)
     this->socketFD = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     // Enable non-blocking recvfrom:
-    socketFlags = fcntl(this->socketFD, F_GETFL);
-    socketFlags |= O_NONBLOCK;
-    fcntl(this->socketFD, F_SETFL, socketFlags);
 
     if (this->socketFD < 0)
     {
@@ -80,10 +77,6 @@ void SessionAPI::start()
 void SessionAPI::receiveLoop()
 {
     char buffer[MAX_MSG_LEN];
-
-    // pollfd pfd[1];
-    // pfd[0].fd = this->socketFD;
-    // pfd[0].events = POLLIN | POLLRDNORM | POLLRDBAND | POLLPRI | POLLOUT;
 
     struct sockaddr_in remoteAddr;
     socklen_t addrLen = sizeof(remoteAddr);

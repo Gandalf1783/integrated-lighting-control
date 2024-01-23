@@ -18,7 +18,9 @@
 class IPCManager {
     private: 
         std::shared_ptr<Log> logger;
-             
+        std::unique_ptr<zmqpp::context> context;
+        zmqpp::socket_type type; // No PTR needed, just an enum
+        std::unique_ptr<zmqpp::socket> socket;
     public:
         IPCManager(std::shared_ptr<Log> logger);
         void start();

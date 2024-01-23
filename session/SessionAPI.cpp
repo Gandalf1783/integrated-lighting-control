@@ -9,6 +9,8 @@
 
 #define ANSI_COLOR_RESET "\x1b[0m"
 
+using namespace std;
+
 SessionAPI::SessionAPI()
 {
     this->shouldThreadStop = false;
@@ -86,7 +88,7 @@ void SessionAPI::receiveLoop()
     struct sockaddr_in remoteAddr;
     socklen_t addrLen = sizeof(remoteAddr);
 
-    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_MAGENTA "SessionAPI" ANSI_COLOR_RESET "] : Receiveloop started on PID %d\n", getpid());
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_MAGENTA "SessionAPI" ANSI_COLOR_RESET "] : Receiveloop started on PID %d / TID %d\n", getpid(), gettid());
 
     while (!this->shouldThreadStop)
     {
@@ -95,7 +97,7 @@ void SessionAPI::receiveLoop()
 
         if (bytesReceived <= 0)
         {
-            // std::cerr << "Error receiving ILCNET-Message" << std::endl;
+            std::cerr << "Error receiving ILCNET-Message (" << bytesReceived << ") - " << strerror(errno) << " - " << errno << std::endl;
             continue;
         }
 
@@ -171,7 +173,9 @@ void SessionAPI::receiveLoop()
         default:
             break;
         }
+
     }
+    
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_MAGENTA "SessionAPI" ANSI_COLOR_RESET "] : Receiveloop ended.\n");
 };
 

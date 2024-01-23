@@ -10,7 +10,14 @@ IPCManager::IPCManager(std::shared_ptr<Log> logger) {
 void IPCManager::start() {
     const std::string endpoint = "tcp://*:5555";
 
-    zmqpp::context context;
+    this->context = std::make_unique<zmqpp::context>();
+
+    this->type = zmqpp::socket_type::reply;
+    this->socket = std::make_unique<zmqpp::socket>(*(this->context.get()),this->type);
+
+    this->socket->bind(endpoint);
+
+    //TODO: Start Thread to listen
 };
 
 IPCManager::~IPCManager() {

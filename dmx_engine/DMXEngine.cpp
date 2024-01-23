@@ -40,7 +40,7 @@ DMXEngine::DMXEngine(unsigned short universes) {
     This is the Output-Thread
 */
 void DMXEngine::runOutput() {
-    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Thread is " ANSI_COLOR_GREEN "running" ANSI_COLOR_RESET ".\n");
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Outputloop " ANSI_COLOR_GREEN "started" ANSI_COLOR_RESET " on PID %d / TID %d.\n", getpid(), gettid());
     this->shouldThreadStop = false;
     
     FrameLimit<42> frameLimiter;

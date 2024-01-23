@@ -51,6 +51,9 @@ int main() {
     std::shared_ptr<NetworkManager> networkManager;
     std::unique_ptr<IPCManager> ipcManager;
 
+    printf("Initalising ILC.\n\n");
+    printf("ILC Process running on PID %d / TID %d.\n", getpid(), gettid());
+
     readConfig();
 
     signal(SIGTERM, signalHandler); // Handle incoming Signals

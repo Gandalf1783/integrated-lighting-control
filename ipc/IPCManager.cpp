@@ -8,20 +8,20 @@ IPCManager::IPCManager(std::shared_ptr<Log> logger) {
 };
 
 void IPCManager::start() {
-    const std::string endpoint = "tcp://*:5555";
+    
 
-    printf("[IPCManager[] Creating context...\n");
+    printf("[IPCManager] Creating context...\n");
     this->context = std::make_shared<zmqpp::context>();
 
-    printf("[IPCManager[] Setting socket-type...\n");
+    printf("[IPCManager] Setting socket-type...\n");
     this->type = zmqpp::socket_type::router;
-    printf("[IPCManager[] Creating socket...\n");
+    printf("[IPCManager] Creating socket...\n");
     this->socket = std::make_shared<zmqpp::socket>(*(this->context.get()),this->type);
 
-    printf("[IPCManager[] Binding...\n");
-    this->socket->bind(endpoint);
+    printf("[IPCManager] Binding...\n");
+    this->socket->bind("tcp://127.0.0.1:5555");
 
-    printf("[IPCManager[] Done lol \\o/\n");
+    printf("[IPCManager] Done lol \\o/\n");
     //TODO: Start Thread to listen
     this->shouldThreadStop = false;
     this->zmqppThread = std::thread(&IPCManager::receiveLoop, this);
@@ -54,4 +54,23 @@ void IPCManager::receiveLoop() {
 
 IPCManager::~IPCManager() {
     printf("[IPCManager] Closing IPC...\n");
+    this->shouldThreadStop = true;
+
+    printf("Closing Socket: \n");
+    std::string endpoint = this->socket->get<std::string>(zmqpp::socket_option::last_endpoint);
+
+    std::cout << "Unbinding: " << endpoint << std::endl;
+
+    this->socket->unbind(endpoint);
+    printf("ERRNO: %s\n", zmq_strerror(zmq_errno()));
+
+    zmq_close(*this->socket.get());
+    printf("ERRNO: %s\n", zmq_strerror(zmq_errno()));    
+
+    printf("Destroy Context: \n");
+    
+    zmq_ctx_term(*(this->context.get()));
+    printf("ERRNO: %s\n", zmq_strerror(zmq_errno()));
+
+    this->zmqppThread.join();
 };

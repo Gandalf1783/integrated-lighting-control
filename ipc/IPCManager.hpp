@@ -17,6 +17,7 @@
 
 class IPCManager {
     private: 
+        const std::string endpoint = "tcp://127.0.0.1:5555";
         bool shouldThreadStop;
         std::shared_ptr<Log> logger;
         std::shared_ptr<zmqpp::context> context;

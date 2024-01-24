@@ -49,7 +49,6 @@ void DMXEngine::runOutput() {
         
         //TODO: Apply the effects here!
         runInputs();
-        runEffects();
 
         for(int i = 0; i < this->universeNum; i++) {
             std::shared_ptr<Universe> currentUniverse;
@@ -73,26 +72,27 @@ void DMXEngine::runOutput() {
     This is the Effect-Thread
 */
 void DMXEngine::runEffects() {
-    // double delta;
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Effectloop " ANSI_COLOR_GREEN "started" ANSI_COLOR_RESET " on PID %d / TID %d.\n", getpid(), gettid());
 
-    // milliseconds ms = duration_cast< milliseconds >(
-    //     system_clock::now().time_since_epoch()
-    // );
-    // FrameLimit<30> frameLimiter;
-    // while(!this->shouldThreadStop) {
+    milliseconds ms = duration_cast< milliseconds >(
+        system_clock::now().time_since_epoch()
+    );
+
+    FrameLimit<60> frameLimiter;
+
+    while(!this->shouldThreadStop) {
         for(int i = 0; i < this->universeNum; i++ ) {
             for(int j = 0; j < 512; j++) {
-
+                
                 this->universes.at(i)->setDmxValue(j,j+this->sequenceNum);      
                 
             }
         }
 
-
-    //     frameLimiter.sleep(); // Should limit to 30 dmx frames per sec
-    // }
+        frameLimiter.sleep(); // Should limit to 60 effect updates per sec
+    }
     
-    // printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Effects-Thread has stopped.\n");
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Effect-Thread has stopped.\n");
 }
     
 void DMXEngine::runInputs() {
@@ -113,16 +113,17 @@ void DMXEngine::addOutput(std::shared_ptr<Output> output) {
 void DMXEngine::start() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Starting Thread \n");
     this->dmxEngineOutputThread = std::thread(&DMXEngine::runOutput, this);
-  //  this->dmxEngineEffectThread = std::thread(&DMXEngine::runEffects, this);
+    this->dmxEngineEffectThread = std::thread(&DMXEngine::runEffects, this);
   //  this->dmxEngineInputThread = std::thread(&DMXEngine::runInputs, this);
 }
 
 void DMXEngine::stop() {
-     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : " ANSI_COLOR_RED "Stopping" ANSI_COLOR_RESET " Thread \n");
+    printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : " ANSI_COLOR_RED "Stopping" ANSI_COLOR_RESET " Thread \n");
     this->shouldThreadStop = true;
     this->dmxEngineOutputThread.join();
-   // this->dmxEngineEffectThread.join();
+    this->dmxEngineEffectThread.join();
    // this->dmxEngineInputThread.join();
+
 }
 
 void DMXEngine::freeMemory() {

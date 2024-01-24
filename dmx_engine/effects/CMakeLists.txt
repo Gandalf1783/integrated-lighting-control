@@ -1,4 +1,4 @@
-set(effectsSrc Waveform.cpp Effect.cpp)
+set(effectsSrc SineWave.cpp Effect.cpp)
 
 message("-- Adding target \"dmx_engine\\effects\"")
 

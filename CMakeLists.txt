@@ -31,6 +31,6 @@ add_subdirectory(config)
 add_subdirectory(ipc)
 
 add_executable(ilc main.cpp)
-target_link_libraries(ilc ipc dmxengine config network log session dmx_outputs fixture channel Threads::Threads zmq zmqpp)
+target_link_libraries(ilc ipc effects dmxengine config network log session dmx_outputs fixture channel Threads::Threads zmq zmqpp)
 
 message("### CMake has completed! ###")

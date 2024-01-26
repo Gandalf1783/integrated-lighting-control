@@ -7,12 +7,10 @@
 #ifndef SineWave_HPP
 #define SineWave_HPP
 
-class SineWave : Effect {
-
-    private:
-        
+class SineWave : public Effect {
     public:
-        double calcValue(std::chrono::milliseconds startMs, std::chrono::milliseconds deltaTime);
+        SineWave();
+        double calcValue(std::chrono::milliseconds diffMs) ;
 };
 
 

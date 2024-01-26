@@ -74,20 +74,42 @@ void DMXEngine::runOutput() {
 void DMXEngine::runEffects() {
     printf(ANSI_COLOR_RESET "[" ANSI_COLOR_YELLOW "DMXENGINE" ANSI_COLOR_RESET "] : Effectloop " ANSI_COLOR_GREEN "started" ANSI_COLOR_RESET " on PID %d / TID %d.\n", getpid(), gettid());
 
-    milliseconds ms = duration_cast< milliseconds >(
+    std::chrono::milliseconds currentMs = duration_cast< milliseconds >(
         system_clock::now().time_since_epoch()
     );
 
-    FrameLimit<60> frameLimiter;
+    std::shared_ptr<SineWave> newSineWave = std::make_shared<SineWave>();
+    std::shared_ptr<Effect> newBaseEffect = std::dynamic_pointer_cast<Effect>(newSineWave);
+    std::shared_ptr newEffectsMeta = std::make_shared<EffectMeta>(newBaseEffect, currentMs);
+
+    this->runningEffects.push_back(newEffectsMeta);
+
+    FrameLimit<5> frameLimiter;
 
     while(!this->shouldThreadStop) {
-        for(int i = 0; i < this->universeNum; i++ ) {
-            for(int j = 0; j < 512; j++) {
-                
-                this->universes.at(i)->setDmxValue(j,j+this->sequenceNum);      
-                
-            }
+        
+        // Process effects here:
+
+        // TODO: We can allow insertion, since its APPENDED and we can always iterate one more object
+        // We should only lock for removal of objects!
+
+        // Lock the Thread so Effects can't be deleted:
+        runningEffectsLock.lock();
+
+        // Calculate current Time:
+
+        milliseconds currentMs = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+        );
+
+        for(std::shared_ptr<EffectMeta> effectMeta : this->runningEffects) {
+            milliseconds diffMs = currentMs - effectMeta->startMs; // Calculate diff
+            printf("%d\n", effectMeta->effect->calcValue(diffMs)); // Run Effect
+            //Assign Effect result to selection
         }
+
+
+        runningEffectsLock.unlock();
 
         frameLimiter.sleep(); // Should limit to 60 effect updates per sec
     }

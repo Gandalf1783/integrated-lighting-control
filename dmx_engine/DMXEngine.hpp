@@ -5,11 +5,14 @@
 #include <math.h>
 #include <thread>
 #include <memory>
+#include <mutex>
 
 #include "FrameLimit.hpp"
 
 #include "Universe.hpp"
-#include "effects/Effect.hpp"
+
+#include "effects/SineWave.hpp"
+
 #include "../dmx_output/Output.hpp"
 #include "../dmx_output/ArtNet.hpp"
 
@@ -19,18 +22,28 @@
 #define DEFAULT_DMX_UNIVERSES 16
 #define MAX_DMX_UNIVERSES 20
 
+typedef struct EffectMeta {
+    EffectMeta(std::shared_ptr<Effect> effect1, std::chrono::milliseconds startMs1) 
+    : effect(effect1), startMs(startMs1) 
+    { }
+    std::shared_ptr<Effect> effect;
+    std::chrono::milliseconds startMs;
+};
+
 class DMXEngine {
     private:
         int universeNum;
         unsigned char sequenceNum;
         std::vector<std::shared_ptr<Universe>> universes;
         std::vector<std::shared_ptr<Output>> dmxOutputs;
-        std::vector<std::shared_ptr<Effect>> runningEffects;
+        std::vector<std::shared_ptr<EffectMeta>> runningEffects;
 
 
         std::thread dmxEngineInputThread;
         std::thread dmxEngineOutputThread;
         std::thread dmxEngineEffectThread;
+
+        std::mutex runningEffectsLock;
 
         bool shouldThreadStop;
         void runOutput();
